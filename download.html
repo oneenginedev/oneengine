@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Downloading OneEngine</title>
+    <meta name="theme-color" content="#f6f6f9" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <a class="brand" href="index.html" aria-label="OneEngine home">
+        <svg class="mark" viewBox="0 0 1024 1024" aria-hidden="true">
+          <circle cx="512" cy="512" r="320" fill="none" stroke="currentColor" stroke-width="64" stroke-dasharray="1400 350"/>
+          <circle cx="512" cy="512" r="110" fill="currentColor"/>
+        </svg>
+        <span>OneEngine</span>
+      </a>
+      <a class="btn btn-line btn-small" href="index.html">Back to site</a>
+    </header>
+
+    <main class="dl-page">
+      <div>
+        <div class="hero-mark" aria-hidden="true">
+          <span class="ping"></span>
+          <span class="ping"></span>
+          <svg viewBox="0 0 1024 1024">
+            <defs>
+              <linearGradient id="ink" x1="160" y1="900" x2="900" y2="120" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#5b3df5" />
+                <stop offset="100%" stop-color="#2fd3e6" />
+              </linearGradient>
+            </defs>
+            <circle class="draw-shape" cx="512" cy="512" r="320" />
+            <circle class="core-dot" cx="512" cy="512" r="110" />
+          </svg>
+        </div>
+        <h1 data-title>Getting OneEngine ready…</h1>
+        <p class="status" data-status>OneEngine v1.0.4 for Windows (64-bit), 12.4 MB portable package.</p>
+        <div class="steps">
+          <div>
+            <strong>1. Download the archive</strong>
+            It will save into your Downloads folder as a lightweight .zip or standalone .exe.
+          </div>
+          <div>
+            <strong>2. Extract anywhere</strong>
+            Fully portable with zero registry bloat or mandatory prerequisites.
+          </div>
+          <div>
+            <strong>3. Launch runtime</strong>
+            Boots in 300 milliseconds with the interactive world editor and hot-reload active.
+          </div>
+        </div>
+        <p class="again" data-again>
+          Didn't start? <a class="text-link" data-link href="https://github.com">Download it directly</a>.
+        </p>
+      </div>
+    </main>
+
+    <script>
+      ;(() => {
+        const title = document.querySelector('[data-title]')
+        const status = document.querySelector('[data-status]')
+        const link = document.querySelector('[data-link]')
+        // Ready for real repository URL when set
+        const releaseUrl = 'https://github.com'
+        link.href = releaseUrl
+      })()
+    </script>
+  </body>
+</html>
