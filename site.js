@@ -7,6 +7,8 @@
   // Hero background motion (video + fire). Reduced-motion visitors start paused.
   let heroMotionPaused = reduced
   let syncFire = () => {}
+  // CSS loops in the hero (logo ping, capture dot) read this class
+  const paintMotionClass = () => document.documentElement.classList.toggle('motion-paused', heroMotionPaused)
 
   // Calls onChange(true|false) as an element enters/leaves the viewport or the tab is hidden/shown
   const watchVisibility = (el, onChange, threshold = 0.2) => {
@@ -168,8 +170,10 @@
       if (heroState) { heroState.userPaused = heroMotionPaused; heroState.sync() }
       syncFire()
       paintHeroToggle()
+      paintMotionClass()
     })
     paintHeroToggle()
+    paintMotionClass()
   }
 
   const gameState = videoPlayers.find((s) => s.video.id === 'gameplayVideo')

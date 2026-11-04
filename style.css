@@ -156,17 +156,35 @@ main:focus {
   outline: none;
 }
 
-.eyebrow {
-  margin-bottom: 14px;
-  color: var(--violet);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+/* Browser surfaces carry the palette too */
+::selection {
+  background: color-mix(in srgb, var(--violet) 22%, transparent);
+  color: var(--ink);
 }
 
-.styles .eyebrow {
-  color: var(--violet-on-dark);
+.styles ::selection,
+.maker-card ::selection {
+  background: color-mix(in srgb, var(--violet-on-dark) 35%, transparent);
+  color: #fff;
+}
+
+html {
+  accent-color: var(--violet);
+  caret-color: var(--violet);
+  scrollbar-color: color-mix(in srgb, var(--ink) 28%, transparent) transparent;
+}
+
+a {
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p, li, dd, summary {
+  text-wrap: pretty;
 }
 
 /* ---------------------------------------------------------------- buttons */
@@ -324,7 +342,14 @@ main:focus {
   border-radius: 999px;
   background: var(--card);
   color: var(--ink-2);
-  transition: color 140ms, border-color 140ms;
+  transition: color 140ms, border-color 140ms, transform 160ms var(--ease);
+}
+
+.nav-icon:active,
+.motion-toggle:active,
+.video-ctrl-btn:active,
+.nav-toggle:active {
+  transform: scale(0.97);
 }
 
 .nav-icon:hover {
@@ -399,7 +424,7 @@ main:focus {
 .hero-mark .core-dot {
   fill: url(#ink);
   transform-origin: 50% 50%;
-  animation: pop 460ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  animation: pop 420ms cubic-bezier(0.34, 1.3, 0.64, 1) both;
 }
 
 .hero-mark .ping {
@@ -428,7 +453,8 @@ main:focus {
 
 @keyframes pop {
   from {
-    transform: scale(0);
+    opacity: 0;
+    transform: scale(0.8);
   }
 }
 
@@ -443,13 +469,8 @@ main:focus {
   }
 }
 
-.hero .eyebrow {
-  margin: 26px 0 0;
-  animation: rise 900ms var(--ease) 120ms both;
-}
-
 .wordmark {
-  margin-top: 10px;
+  margin-top: 26px;
   font-family: 'Unbounded', sans-serif;
   font-weight: 600;
   font-size: clamp(54px, 7.5vw, 108px);
@@ -588,7 +609,7 @@ main:focus {
   background: rgba(14, 12, 29, 0.78);
   color: #fff;
   cursor: pointer;
-  transition: background-color 140ms;
+  transition: background-color 140ms, transform 160ms var(--ease);
 }
 
 .motion-toggle:hover {
@@ -769,6 +790,11 @@ section {
   animation: pulse-live 1.5s infinite;
 }
 
+html.motion-paused .hero-mark .ping,
+html.motion-paused .live-dot {
+  animation-play-state: paused;
+}
+
 @keyframes pulse-live {
   0% { transform: scale(0.95); opacity: 0.6; }
   50% { transform: scale(1.3); opacity: 1; }
@@ -845,7 +871,7 @@ section {
   min-height: 32px;
   padding: 5px 12px;
   border-radius: 8px;
-  transition: background-color 150ms;
+  transition: background-color 150ms, transform 160ms var(--ease);
 }
 
 .video-ctrl-btn:hover {
@@ -922,10 +948,12 @@ section {
   position: relative;
 }
 
-.service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -16px rgba(14, 12, 29, 0.12);
-  border-color: rgba(91, 61, 245, 0.35);
+@media (hover: hover) and (pointer: fine) {
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -16px rgba(14, 12, 29, 0.12);
+    border-color: rgba(91, 61, 245, 0.35);
+  }
 }
 
 .service-icon-box {
@@ -1136,7 +1164,7 @@ section {
   font-size: 24px;
   font-weight: 400;
   color: var(--ink-3);
-  transition: transform 200ms;
+  transition: transform 200ms var(--ease);
 }
 
 .faq details[open] summary::after {
@@ -1484,6 +1512,21 @@ section {
   }
   .nav.is-open nav {
     display: flex;
+  }
+  /* Opens from the toggle's corner; closing stays instant so the page answers at once */
+  .nav nav {
+    transform-origin: top right;
+  }
+  .nav.is-open nav {
+    opacity: 1;
+    transform: none;
+    transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+  }
+  @starting-style {
+    .nav.is-open nav {
+      opacity: 0;
+      transform: scale(0.96) translateY(-4px);
+    }
   }
   .nav nav a {
     gap: 12px;
