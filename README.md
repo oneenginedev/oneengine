@@ -36,7 +36,9 @@ Then open http://localhost:8000. Do not open `index.html` straight from disk: th
 - `changelog.html`: release notes for every GitHub release.
 - `404.html`: not-found page. Its `<base href>` must match the site URL above.
 - `style.css`: all site styles. The `:root` tokens at the top are the single source of truth.
-- `site.js`: fire canvas, hero pause control, video playback, mobile nav, and GitHub release data.
+- `site.js`: fire canvas, hero pause control, video playback, Lenis smooth scrolling, mobile nav, and GitHub release data.
+
+The only third-party script is [Lenis](https://github.com/darkroomengineering/lenis) 1.1.20 for smooth scrolling, loaded from jsDelivr with a pinned version and an `integrity` hash. To upgrade it, change the version in the `<script>` tag on `index.html`, `download.html` and `changelog.html` and replace the `integrity` value with the new file's SHA-384 hash.
 - `store/`: the pre-built store app (build output only; `assets/` is what `index.html` loads, and the copies in the `store/` root are unused).
 - `sitemap.xml`, `robots.txt`: search engine files.
 - `og-image.jpg`: 1200 × 630 social preview image.

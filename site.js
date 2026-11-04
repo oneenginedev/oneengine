@@ -202,6 +202,35 @@
     paintMuteToggle()
   }
 
+  // ---------------------------------------------------------------- Smooth scrolling (Lenis)
+  // Skipped for reduced-motion visitors, and if the CDN script didn't load: native scrolling still works.
+  if (!reduced && window.Lenis) {
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true })
+    const lenisFrame = (time) => {
+      lenis.raf(time)
+      requestAnimationFrame(lenisFrame)
+    }
+    requestAnimationFrame(lenisFrame)
+
+    // In-page links glide too, landing below the fixed nav like scroll-padding-top does natively
+    const NAV_OFFSET = -90
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="#"]')
+      if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      const id = decodeURIComponent(link.hash.slice(1))
+      const target = id && document.getElementById(id)
+      if (!target) return
+      e.preventDefault()
+      const isMain = target.id === 'main'
+      lenis.scrollTo(isMain ? 0 : target, {
+        offset: isMain ? 0 : NAV_OFFSET,
+        // The skip link must also move keyboard focus, not just the viewport
+        onComplete: () => { if (isMain) target.focus({ preventScroll: true }) }
+      })
+      history.pushState(null, '', `#${id}`)
+    })
+  }
+
   // ---------------------------------------------------------------- Mobile nav
   const siteNav = document.querySelector('.nav')
   const navToggle = document.querySelector('.nav-toggle')

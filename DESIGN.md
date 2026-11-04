@@ -72,7 +72,8 @@ Shadows are soft, offset downward and tinted with the ink colour, for example `0
 - Easing: `--ease: cubic-bezier(0.22, 1, 0.36, 1)`.
 - Hover and press transitions: 140–220ms.
 - Entrance (`rise`): 900ms, staggered by 120ms.
-- `prefers-reduced-motion`: all animations and transitions collapse to 0.01ms, loops stop, videos start paused and the fire canvas draws one static frame.
+- `prefers-reduced-motion`: all animations and transitions collapse to 0.01ms, loops stop, videos start paused, the fire canvas draws one static frame and Lenis smooth scrolling stays off.
+- Smooth scrolling: [Lenis](https://github.com/darkroomengineering/lenis) 1.1.20 (`lerp: 0.1`) on the home, download and changelog pages. In-page links glide to their target 90px below the top so they clear the fixed nav; the skip link also moves focus to `#main`. Lenis is not started for reduced-motion visitors, and if its script fails to load the site falls back to native scrolling.
 - Never use `transition: all`.
 
 ## 3. Typography

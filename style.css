@@ -42,6 +42,30 @@ html {
   scroll-padding-top: 90px;
 }
 
+/* Lenis smooth scrolling (base rules from lenis.css). Lenis adds these classes
+   to <html> only when it runs, so native scrolling is untouched without it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+/* Native smooth scrolling fights Lenis's per-frame scrollTo, so turn it off whenever Lenis runs */
+html.lenis {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 body {
   margin: 0;
   background: var(--paper);
