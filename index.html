@@ -34,9 +34,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Floating Navigation Bar -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="nav">
-      <a class="brand" href="#top" aria-label="OneEngine home">
+      <a class="brand" href="#main" aria-label="OneEngine home">
         <svg class="mark" viewBox="0 0 1024 1024" aria-hidden="true">
           <circle cx="512" cy="512" r="320" fill="none" stroke="currentColor" stroke-width="64" stroke-dasharray="1400 350"/>
           <circle cx="512" cy="512" r="110" fill="currentColor"/>
@@ -51,40 +52,36 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>
           Systems
         </a>
-        <a href="#telemetry" style="--i: #2fb8e6">
+        <a href="#telemetry" style="--i: #1f9fc4">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
           Telemetry
         </a>
-        <a href="#features" style="--i: #ff7a2f">
+        <a href="#features" style="--i: #e0661c">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>
           Games
         </a>
-        <a href="#services" style="--i: #22b980">
+        <a href="#services" style="--i: #1a9e6c">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>
           Services
         </a>
-        <a href="store/" style="--i: #e2435a">
+        <a href="store/" style="--i: #d4344c">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 14H5L6 7z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>
           Store
-        </a>
-        <a href="#vision" style="--i: #8a6cff">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-          Vision
         </a>
         <a href="#faq" style="--i: #5b3df5">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>
           FAQ
         </a>
       </nav>
-      <a class="nav-icon" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener" aria-label="OneEngine on GitHub" title="Source code on GitHub">
+      <a class="nav-icon" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener" aria-label="OneEngine on GitHub (opens in a new tab)" title="OneEngine on GitHub">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
       </a>
-      <a class="btn btn-ink btn-small" href="store/">Open Store</a>
+      <a class="btn btn-ink btn-small" href="download.html">Download</a>
     </header>
 
-    <main id="top">
-      <!-- Hero Section -->
-      <section class="hero">
+    <main id="main" tabindex="-1">
+      <!-- Hero: what it is, why it is fast, how to get it -->
+      <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <div class="hero-mark" aria-hidden="true">
             <span class="ping"></span>
@@ -100,7 +97,8 @@
               <circle class="core-dot" cx="512" cy="512" r="110" />
             </svg>
           </div>
-          <h1 class="wordmark">OneEngine</h1>
+          <p class="eyebrow">Game engine for Windows 10 &amp; 11</p>
+          <h1 class="wordmark" id="hero-title">OneEngine</h1>
           <p class="lead">The high-performance game engine built for speed, simplicity, and zero bloat.</p>
           <div class="cta">
             <a class="btn btn-ink" href="download.html">
@@ -109,51 +107,85 @@
               </svg>
               Download for Windows
             </a>
-            <a class="text-link" href="#systems">Explore Systems</a>
-            <a class="text-link" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn-line" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">
+              <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+              View on GitHub
+              <span class="sr-only">(opens in a new tab)</span>
+            </a>
           </div>
           <p class="meta">Free and open source for Windows 10 and 11. Single executable, zero dependencies.</p>
           <dl class="stats">
-            <div><dt data-count="128" data-suffix="Hz">128Hz</dt><dd>tickrate netcode</dd></div>
-            <div><dt data-count="100" data-suffix="k+">100k+</dt><dd>active ECS entities</dd></div>
-            <div><dt data-count="7" data-suffix="ms">&lt;7ms</dt><dd>frame budget</dd></div>
-            <div><dt data-count="12" data-suffix="MB">12MB</dt><dd>standalone binary</dd></div>
+            <div><dt>tickrate netcode</dt><dd data-count="128" data-suffix="Hz">128Hz</dd></div>
+            <div><dt>active ECS entities</dt><dd data-count="100" data-suffix="k+">100k+</dd></div>
+            <div><dt>frame budget</dt><dd data-count="7" data-prefix="&lt;" data-suffix="ms">&lt;7ms</dd></div>
+            <div><dt>standalone binary</dt><dd data-count="12" data-suffix="MB">12MB</dd></div>
           </dl>
+          <p class="stats-note">Design targets for v1.0, not independent benchmarks.</p>
         </div>
 
-        <!-- CSS Laptop Mockup with Live Engine Simulation -->
-        <figure class="laptop" aria-label="OneEngine running live">
+        <figure class="laptop">
           <div class="lid">
             <div class="engine-screen">
-              <div class="engine-bar">
+              <div class="engine-bar" aria-hidden="true">
                 <div class="dots"><span></span><span></span><span></span></div>
                 <div>OneEngine Runtime v1.0.4 — Direct3D 12</div>
                 <div>128.0 FPS (7.1ms)</div>
               </div>
               <div class="engine-canvas-wrap">
-                <video class="screen-bg screen-video" poster="gameplay-frame.webp" loop muted playsinline preload="metadata">
+                <video id="heroVideo" class="screen-bg screen-video" poster="gameplay-frame.webp" loop muted playsinline preload="metadata" aria-hidden="true">
                   <source src="gameplay-preview-1280.webm" type="video/webm" />
                   <source src="gameplay-preview-1280.mp4" type="video/mp4" />
                 </video>
-                <div class="live-gameplay-pill">
+                <div class="live-gameplay-pill" aria-hidden="true">
                   <span class="live-dot"></span> LIVE RUNTIME PREVIEW
                 </div>
-                <canvas id="fireCanvas"></canvas>
-
+                <canvas id="fireCanvas" aria-hidden="true"></canvas>
+                <button type="button" class="motion-toggle" id="heroMotionToggle" aria-label="Pause background animation">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
               </div>
             </div>
           </div>
           <div class="deck"></div>
+          <figcaption class="sr-only">Gameplay recording shown inside an illustrative OneEngine runtime window.</figcaption>
         </figure>
       </section>
 
       <!-- Architecture / Systems Showcase -->
-      <section id="systems" class="styles">
+      <section id="systems" class="styles" aria-labelledby="systems-title">
         <div class="section-head">
-          <h2>Every subsystem built for pure performance.</h2>
+          <p class="eyebrow">Architecture</p>
+          <h2 id="systems-title">Every subsystem built for pure performance.</h2>
           <p>
             No bloated visual node tangles, no hundred-gigabyte editor installations. OneEngine provides clean, cache-coherent C++ core architectures and instant LuaJIT hot reload.
           </p>
+        </div>
+
+        <div class="style-picker" role="tablist" aria-label="Engine systems">
+          <button type="button" role="tab" id="tab-ecs" aria-selected="true" aria-controls="stagePanel" tabindex="0" data-id="ecs">
+            <span class="name">ECS Core</span>
+            <span class="what">100k entities on flat memory</span>
+          </button>
+          <button type="button" role="tab" id="tab-netcode" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="netcode">
+            <span class="name">Netcode</span>
+            <span class="what">64-player rollback at 128Hz</span>
+          </button>
+          <button type="button" role="tab" id="tab-hotreload" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="hotreload">
+            <span class="name">Hot Reload</span>
+            <span class="what">Live Lua &amp; C++ swap in 14ms</span>
+          </button>
+          <button type="button" role="tab" id="tab-editor" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="editor">
+            <span class="name">In-Situ Editor</span>
+            <span class="what">Zero engine restarts</span>
+          </button>
+          <button type="button" role="tab" id="tab-replays" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="replays">
+            <span class="name">Replay Sim</span>
+            <span class="what">Deterministic 60KB clips</span>
+          </button>
+          <button type="button" role="tab" id="tab-pipeline" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="pipeline">
+            <span class="name">Build Pipeline</span>
+            <span class="what">12MB single-file Windows exe</span>
+          </button>
         </div>
 
         <div class="style-stage">
@@ -175,7 +207,7 @@
               </div>
             </div>
             <div class="stage-code-wrap">
-              <pre class="code-window"><code id="stageCode"><span class="cm">// Cache-friendly ECS iteration</span>
+              <pre class="code-window" tabindex="0" aria-label="Code example"><code id="stageCode"><span class="cm">// Cache-friendly ECS iteration</span>
 <span class="kw">auto</span> view = registry.<span class="fn">view</span>&lt;<span class="kw">Transform</span>, <span class="kw">Velocity</span>&gt;();
 <span class="kw">for</span> (<span class="kw">auto</span> [entity, pos, vel] : view.<span class="fn">each</span>()) {
     pos.xyz += vel.xyz * dt;
@@ -184,50 +216,33 @@
           </div>
         </div>
 
-        <div class="style-picker" role="tablist" aria-label="Engine Systems">
-          <button role="tab" id="tab-ecs" aria-selected="true" aria-controls="stagePanel" tabindex="0" data-id="ecs">
-            <span class="name">ECS Core</span>
-            <span class="what">100k entities on flat memory</span>
+        <div class="stage-foot">
+          <button type="button" class="rotate-toggle" id="rotateToggle" hidden>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            <span>Pause auto-rotate</span>
           </button>
-          <button role="tab" id="tab-netcode" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="netcode">
-            <span class="name">Netcode</span>
-            <span class="what">64-player rollback at 128Hz</span>
-          </button>
-          <button role="tab" id="tab-hotreload" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="hotreload">
-            <span class="name">Hot Reload</span>
-            <span class="what">Live Lua &amp; C++ swap in 14ms</span>
-          </button>
-          <button role="tab" id="tab-editor" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="editor">
-            <span class="name">In-Situ Editor</span>
-            <span class="what">Zero engine restarts</span>
-          </button>
-          <button role="tab" id="tab-replays" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="replays">
-            <span class="name">Replay Sim</span>
-            <span class="what">Deterministic 60KB clips</span>
-          </button>
-          <button role="tab" id="tab-pipeline" aria-selected="false" aria-controls="stagePanel" tabindex="-1" data-id="pipeline">
-            <span class="name">Build Pipeline</span>
-            <span class="what">12MB single-file Windows exe</span>
-          </button>
+          <p class="fine-dark">Figures are v1.0 design targets, not independent benchmarks.</p>
         </div>
       </section>
 
       <!-- Engine Telemetry & Performance Tuner -->
-      <section id="telemetry" class="sound">
+      <section id="telemetry" class="sound" aria-labelledby="telemetry-title">
         <div class="sound-copy">
-          <h2>Tune your engine budget live.</h2>
+          <p class="eyebrow">Profiling</p>
+          <h2 id="telemetry-title">Tune your engine budget live.</h2>
           <p>
             Dial in deterministic tick loops, GPU draw calls, and physics iterations. Instant profiling telemetry keeps your frame rate rock solid without leaving the editor.
           </p>
-          <div class="presets" role="radiogroup" aria-label="Performance Profiles">
-            <button role="radio" aria-checked="true" tabindex="0" data-preset="competitive">Competitive 128Hz</button>
-            <button role="radio" aria-checked="false" tabindex="-1" data-preset="cinematic">Cinematic 4K</button>
-            <button role="radio" aria-checked="false" tabindex="-1" data-preset="balanced">Balanced</button>
-            <button role="radio" aria-checked="false" tabindex="-1" data-preset="lowpower">Low Power</button>
-            <button role="radio" aria-checked="false" tabindex="-1" data-preset="benchmark">Stress Test</button>
+          <div class="presets" role="radiogroup" aria-label="Performance profiles">
+            <button type="button" role="radio" aria-checked="true" tabindex="0" data-preset="competitive">Competitive 128Hz</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-preset="cinematic">Cinematic 4K</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-preset="balanced">Balanced</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-preset="lowpower">Low Power</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-preset="benchmark">Stress Test</button>
           </div>
+          <p class="hint">Illustrative profiles that show how the tuner works, not measured results.</p>
         </div>
-        <div class="eq-card" aria-hidden="true">
+        <div class="eq-card" id="eqCard" role="img" aria-label="Pipeline telemetry for the Competitive 128Hz profile">
           <div class="eq-header">
             <span>PIPELINE TELEMETRY</span>
             <span>FRAME BUDGET: 7.8ms</span>
@@ -243,15 +258,15 @@
         </div>
       </section>
 
-      <!-- Game Catalog Features Section -->
-      <section id="features" class="features">
+      <!-- Game showcase -->
+      <section id="features" class="features" aria-labelledby="features-title">
         <div class="section-head">
-          <h2>Railbound: Tactical Protocol</h2>
+          <p class="eyebrow">Built with OneEngine</p>
+          <h2 id="features-title">Railbound: Tactical Protocol</h2>
           <p>Real titles shipping directly on the OneEngine Store. Watch authentic gameplay running live on the Direct3D 12 runtime with deterministic rollback netcode.</p>
         </div>
 
         <div class="game-showcase">
-          <!-- Real Gameplay Video Player -->
           <div class="game-video-card">
             <div class="game-video-wrapper">
               <video id="gameplayVideo" poster="gameplay-frame.webp" loop muted playsinline preload="none" aria-label="Railbound gameplay preview">
@@ -259,77 +274,75 @@
                 <source src="gameplay-preview-1280.mp4" type="video/mp4" />
               </video>
               <div class="video-control-overlay">
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <button type="button" class="video-ctrl-btn" id="videoPlayToggle" aria-label="Toggle Play/Pause">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <div class="video-ctrls">
+                  <button type="button" class="video-ctrl-btn" id="videoPlayToggle" aria-label="Pause gameplay video">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                     <span>Pause</span>
                   </button>
-                  <button type="button" class="video-ctrl-btn" id="videoMuteToggle" aria-label="Toggle Audio">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                  <button type="button" class="video-ctrl-btn" id="videoMuteToggle" aria-label="Unmute gameplay video">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
                     <span>Unmute</span>
                   </button>
                 </div>
-                <div class="video-badge-pill">● 60 FPS 1080p GAMEPLAY</div>
+                <div class="video-badge-pill" aria-hidden="true">● 60 FPS 1080p GAMEPLAY</div>
               </div>
             </div>
-            <div class="game-video-caption">
+            <p class="game-video-caption">
               <strong>Captured In-Engine:</strong> Real gameplay in hostile industrial zone vanguard deployment with active tactical HUD and locked frame rates.
-            </div>
+            </p>
           </div>
 
-          <!-- Real Game Info & Store Connect Card -->
           <div class="game-info-card">
-            <div class="game-card-meta">
-              <span class="game-tag">Tactical</span>
-              <span class="game-tag">Automation</span>
-              <span class="game-tag">Defense</span>
-              <span class="game-tag">Strategy</span>
-              <span class="game-tag">Sci-fi</span>
-            </div>
+            <ul class="game-card-meta" aria-label="Genres">
+              <li class="game-tag">Tactical</li>
+              <li class="game-tag">Automation</li>
+              <li class="game-tag">Defense</li>
+              <li class="game-tag">Strategy</li>
+              <li class="game-tag">Sci-fi</li>
+            </ul>
             <h3>Railbound: Tactical Protocol</h3>
             <p>
               Lead an automated rail defense vanguard across hostile industrial zones. Reconfigure track matrices, repel mechanized raiders, and deploy armored rolling artillery to secure planetary resource arteries.
             </p>
 
-            <div class="game-specs-grid">
-              <div><span>Release</span><strong>v2.4.0 (Oct 2026)</strong></div>
-              <div><span>Developer</span><strong>Afterburn Foundry</strong></div>
-              <div><span>Publisher</span><strong>OneEngine Interactive</strong></div>
-              <div><span>Netcode</span><strong>128Hz Rollback</strong></div>
-              <div><span>Storage</span><strong>40 GB NVMe / SSD</strong></div>
-              <div><span>Status</span><strong>Verified on Store</strong></div>
-            </div>
+            <dl class="game-specs-grid">
+              <div><dt>Release</dt><dd>v2.4.0 (Oct 2026)</dd></div>
+              <div><dt>Developer</dt><dd>Afterburn Foundry</dd></div>
+              <div><dt>Publisher</dt><dd>OneEngine Interactive</dd></div>
+              <div><dt>Netcode</dt><dd>128Hz Rollback</dd></div>
+              <div><dt>Storage</dt><dd>40 GB NVMe / SSD</dd></div>
+              <div><dt>Status</dt><dd>Verified on Store</dd></div>
+            </dl>
 
-            <div class="game-card-footer" style="border-top:1px solid var(--line);padding-top:14px;margin-top:auto;">
-              <div class="game-rating">⭐ 96% positive <span class="game-rating-count">(4,820 reviews)</span></div>
-              <div class="game-price"><s class="old-price">$29.99</s> <strong>$23.99</strong> <span class="game-badge badge-discount" style="position:static;margin-left:6px;">−20%</span></div>
+            <div class="game-card-footer">
+              <div class="game-rating"><span aria-hidden="true">⭐</span> 96% positive <span class="game-rating-count">(4,820 reviews)</span></div>
+              <div class="game-price"><s class="old-price"><span class="sr-only">Was </span>$29.99</s> <strong><span class="sr-only">now </span>$23.99</strong> <span class="game-badge badge-discount">−20%</span></div>
             </div>
 
             <p class="demo-note"><strong>Sample data.</strong> The rating and price above are placeholders for this demo, not real reviews or store prices.</p>
 
             <div class="showcase-actions">
               <a class="btn btn-ink" href="store/">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 Play in OneEngine Store
               </a>
-              <a class="btn btn-line" href="download.html">Download Windows Build</a>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Our Services Section -->
-      <section id="services" class="services">
+      <!-- Services -->
+      <section id="services" class="services" aria-labelledby="services-title">
         <div class="section-head">
-          <h2>Our Services</h2>
+          <p class="eyebrow">Services</p>
+          <h2 id="services-title">Our Services</h2>
           <p>
             Powering game creators and gamers alike with premier original game experiences and a high-performance, developer-first digital store.
           </p>
         </div>
 
         <div class="services-grid">
-          <!-- Service 1: Our Games -->
-          <article class="service-card service-games">
+          <article class="service-card">
             <div class="service-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polygon points="6 3 20 12 6 21 6 3"></polygon>
@@ -342,25 +355,24 @@
             </p>
             <ul class="service-features">
               <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                 <span><strong>Original Titles:</strong> Flagship releases including <em>Railbound: Tactical Protocol</em> and <em>shootPower</em>.</span>
               </li>
               <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                 <span><strong>128Hz Rollback Netcode:</strong> High-tickrate multiplayer architectures with deterministic replay simulation.</span>
               </li>
               <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                 <span><strong>Pure Hardware Utilization:</strong> Direct3D 12 and Vulkan pipelines delivering sub-7ms frame times.</span>
               </li>
             </ul>
             <div class="service-footer">
-              <a class="btn btn-ink btn-small" href="#features">Explore Game Catalog</a>
+              <a class="text-link" href="#features">See Railbound <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
-          <!-- Service 2: One Engine Store -->
-          <article class="service-card service-store">
+          <article class="service-card">
             <div class="service-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -375,65 +387,43 @@
             </p>
             <ul class="service-features">
               <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                 <span><strong>Zero-Bloat Single Binaries:</strong> 1-click standalone installs without launcher overhead or telemetry trackers.</span>
               </li>
               <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                 <span><strong>Fair Creator Terms:</strong> 100% royalty-free engine runtime and transparent developer revenue cuts.</span>
               </li>
               <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                 <span><strong>Integrated Cloud &amp; Modding:</strong> Native cloud save synchronization and seamless community mod delivery.</span>
               </li>
             </ul>
             <div class="service-footer">
-              <a class="btn btn-ink btn-small" href="store/">Launch Web Store</a>
-              <a class="btn btn-line btn-small" href="download.html">Download Desktop Client</a>
+              <a class="text-link" href="store/">Open the web store <span aria-hidden="true">→</span></a>
             </div>
           </article>
         </div>
       </section>
 
-      <!-- Vision / Philosophy Section -->
-      <section id="vision" class="maker">
-        <div class="maker-card">
-          <span class="badge">Engine Philosophy</span>
-          <p class="manifesto-quote">
-            "Modern game engines have become sprawling operating systems. OneEngine is a return to clarity: pure speed, clean code, and zero friction."
-          </p>
-          <div class="chips small">
-            <span>Open Source (MIT)</span>
-            <span>Portable C++</span>
-            <span>&lt; 50k Lines of Code</span>
-          </div>
-        </div>
-        <div class="maker-copy">
-          <h2>Built for developers who actually ship.</h2>
+      <!-- Get started: philosophy + download -->
+      <section id="download" class="download" aria-labelledby="download-title">
+        <div class="section-head">
+          <p class="eyebrow">Get started</p>
+          <h2 id="download-title">Get OneEngine.</h2>
           <p>
-            Instead of spending hours waiting on compiler shaders or downloading 40GB updates, OneEngine boots in under 300 milliseconds.
+            Built for developers who actually ship: indie developers, game jam competitors, and multiplayer studio teams who want total control over every byte and millisecond.
           </p>
-          <p>
-            Designed for indie developers, game jam competitors, and multiplayer studio teams who want total control over every byte and millisecond.
-          </p>
-          <div class="cta">
-            <a class="btn btn-line" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">GitHub Repository</a>
-            <a class="btn btn-line" href="#systems">Read Systems Spec</a>
-          </div>
         </div>
-      </section>
 
-      <!-- Download Section -->
-      <section id="download" class="download">
-        <h2>Get OneEngine.</h2>
-        <div class="dl-cards">
+        <div class="dl-grid">
           <article class="dl-card highlight">
             <h3>Windows 10 / 11</h3>
-            <p class="muted">64-bit Architecture · Release v1.0.4</p>
+            <p class="muted">64-bit · <span data-release-version>Latest release on GitHub</span></p>
             <p>Single standalone binary including the runtime, hot reload server, and world editor. No external dependencies required.</p>
             <div class="cta">
-              <a class="btn btn-ink" href="download.html">Download Executable</a>
-              <a class="text-link" href="download.html">Portable .zip (12 MB)</a>
+              <a class="btn btn-ink" href="download.html">Download for Windows</a>
+              <a class="text-link" href="https://github.com/oneenginedev/oneengine/releases" target="_blank" rel="noopener">All releases<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
           </article>
           <article class="dl-card quiet">
@@ -441,21 +431,33 @@
             <p class="muted">In active development</p>
             <p>Vulkan backend and headless Linux dedicated server builds are currently in testing. Check our GitHub releases for early preview builds.</p>
             <div class="cta">
-              <a class="text-link" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">View GitHub Roadmap</a>
+              <a class="text-link" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">Follow progress on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
           </article>
+          <figure class="maker-card">
+            <span class="badge">Engine Philosophy</span>
+            <blockquote class="manifesto-quote">
+              <p>Modern game engines have become sprawling operating systems. OneEngine is a return to clarity: pure speed, clean code, and zero friction.</p>
+            </blockquote>
+            <ul class="chips small" aria-label="Project facts">
+              <li>Open Source (Apache 2.0)</li>
+              <li>Portable C++</li>
+              <li>&lt; 50k Lines of Code</li>
+            </ul>
+          </figure>
         </div>
         <p class="note">
-          OneEngine is released under the permissive MIT license. You are completely free to use it for personal, commercial, and open-source games.
+          OneEngine is released under the permissive Apache License 2.0. You are completely free to use it for personal, commercial, and open-source games.
         </p>
       </section>
 
-      <!-- FAQ Section -->
-      <section id="faq" class="faq">
-        <h2>Questions</h2>
+      <!-- FAQ -->
+      <section id="faq" class="faq" aria-labelledby="faq-title">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Questions</h2>
         <details>
           <summary>Is OneEngine completely free to use?</summary>
-          <p>Yes. OneEngine is licensed under the MIT License. There are no royalties, subscription tiers, or splash screen requirements.</p>
+          <p>Yes. OneEngine is licensed under the Apache License 2.0. There are no royalties, subscription tiers, or splash screen requirements.</p>
         </details>
         <details>
           <summary>What programming languages are supported?</summary>
@@ -467,38 +469,49 @@
         </details>
         <details>
           <summary>Can I run dedicated multiplayer servers?</summary>
-          <p>Yes. The engine can be compiled in headless mode with <code>oneengine build --server</code>, yielding an ultra-light 4MB server binary capable of hosting 64 players on minimal VPS hardware.</p>
+          <p>Yes. The engine can be compiled in headless mode with <code>oneengine build --server</code>, yielding an ultra-light 4MB server binary capable of hosting 64 players on minimal VPS hardware. (Size and player count are design targets.)</p>
         </details>
         <details>
-          <summary>How does the static GitHub Pages deployment work?</summary>
-          <p>This entire documentation and release website is built in pure HTML5, CSS3, and vanilla JavaScript with no build steps or heavy node frameworks. Simply host it anywhere directly.</p>
+          <summary>Where do I report a bug or ask a question?</summary>
+          <p>Open an issue on <a class="text-link" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">GitHub Issues<span class="sr-only"> (opens in a new tab)</span></a>. Release notes for every build are on the <a class="text-link" href="changelog.html">changelog</a>.</p>
         </details>
       </section>
     </main>
 
-    <!-- Footer -->
     <footer class="foot">
-      <div class="foot-top">
-        <div class="foot-brand">
-          <svg class="mark" width="20" height="20" viewBox="0 0 1024 1024" aria-hidden="true">
-            <circle cx="512" cy="512" r="320" fill="none" stroke="currentColor" stroke-width="64" stroke-dasharray="1400 350"/>
-            <circle cx="512" cy="512" r="110" fill="currentColor"/>
-          </svg>
-          <span>OneEngine</span>
+      <div class="foot-grid">
+        <div class="foot-about">
+          <div class="foot-brand">
+            <svg class="mark" width="20" height="20" viewBox="0 0 1024 1024" aria-hidden="true">
+              <circle cx="512" cy="512" r="320" fill="none" stroke="currentColor" stroke-width="64" stroke-dasharray="1400 350"/>
+              <circle cx="512" cy="512" r="110" fill="currentColor"/>
+            </svg>
+            <span>OneEngine</span>
+          </div>
+          <p>High-performance game engine architecture for modern Windows platforms.</p>
         </div>
-        <div class="foot-links">
-          <a href="#systems">Systems</a>
-          <a href="#telemetry">Telemetry</a>
-          <a href="#features">Games</a>
-          <a href="#services">Services</a>
-        <a href="store/">Store</a>
+        <nav class="foot-col" aria-labelledby="foot-product">
+          <h2 id="foot-product">Product</h2>
           <a href="download.html">Download</a>
-          <a href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">GitHub</a>
-        </div>
+          <a href="changelog.html">Changelog</a>
+          <a href="store/">Store</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="foot-project">
+          <h2 id="foot-project">Project</h2>
+          <a href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+          <a href="https://github.com/oneenginedev/oneengine/releases" target="_blank" rel="noopener">Releases<span class="sr-only"> (opens in a new tab)</span></a>
+          <a href="https://github.com/oneenginedev/oneengine/blob/main/LICENSE" target="_blank" rel="noopener">License<span class="sr-only"> (opens in a new tab)</span></a>
+        </nav>
+        <nav class="foot-col" aria-labelledby="foot-help">
+          <h2 id="foot-help">Help &amp; contact</h2>
+          <a href="https://github.com/oneenginedev/oneengine/issues/new" target="_blank" rel="noopener">Report an issue<span class="sr-only"> (opens in a new tab)</span></a>
+          <a href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">Ask a question<span class="sr-only"> (opens in a new tab)</span></a>
+        </nav>
       </div>
-      <p class="fine">Released under the MIT License. High-performance game engine architecture for modern Windows platforms.</p>
+      <p class="fine">Released under the Apache License 2.0. Figures on this site are design targets or sample data unless a source is given.</p>
     </footer>
 
     <script src="site.js" defer></script>
   </body>
-</html>
+</html>

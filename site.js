@@ -1,6 +1,12 @@
 // OneEngine Static Website Interactivity
 ;(() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const PLAY_PATH = 'M8 5v14l11-7z'
+  const PAUSE_PATH = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'
+
+  // Hero background motion (video + fire). Reduced-motion visitors start paused.
+  let heroMotionPaused = reduced
+  let syncFire = () => {}
 
   // Calls onChange(true|false) as an element enters/leaves the viewport or the tab is hidden/shown
   const watchVisibility = (el, onChange, threshold = 0.2) => {
@@ -110,18 +116,20 @@
       ctx.globalCompositeOperation = 'source-over'
     }
 
-    // Only animate while the canvas is on screen and the tab is visible
+    // Only animate while the canvas is on screen, the tab is visible and motion isn't paused
     let fireRaf = 0
+    let fireVisible = false
     const fireLoop = () => {
       drawFire()
       fireRaf = requestAnimationFrame(fireLoop)
     }
     drawFire() // one static frame, which is all reduced-motion users get
-    watchVisibility(fireCanvas, (on) => {
-      if (reduced) return
-      if (on && !fireRaf) fireRaf = requestAnimationFrame(fireLoop)
-      else if (!on) { cancelAnimationFrame(fireRaf); fireRaf = 0 }
-    }, 0)
+    syncFire = () => {
+      const run = fireVisible && !heroMotionPaused
+      if (run && !fireRaf) fireRaf = requestAnimationFrame(fireLoop)
+      else if (!run) { cancelAnimationFrame(fireRaf); fireRaf = 0 }
+    }
+    watchVisibility(fireCanvas, (on) => { fireVisible = on; syncFire() }, 0)
   }
 
   // ---------------------------------------------------------------- Videos: play only while visible
@@ -136,11 +144,26 @@
     return state
   })
 
+  // Hero pause button: WCAG 2.2.2 needs a way to stop the looping video and fire
+  const heroState = videoPlayers.find((s) => s.video.id === 'heroVideo')
+  const heroToggle = document.getElementById('heroMotionToggle')
+  if (heroToggle) {
+    const paintHeroToggle = () => {
+      heroToggle.setAttribute('aria-label', heroMotionPaused ? 'Play background animation' : 'Pause background animation')
+      heroToggle.querySelector('path').setAttribute('d', heroMotionPaused ? PLAY_PATH : PAUSE_PATH)
+    }
+    heroToggle.addEventListener('click', () => {
+      heroMotionPaused = !heroMotionPaused
+      if (heroState) { heroState.userPaused = heroMotionPaused; heroState.sync() }
+      syncFire()
+      paintHeroToggle()
+    })
+    paintHeroToggle()
+  }
+
   const gameState = videoPlayers.find((s) => s.video.id === 'gameplayVideo')
   const playToggle = document.getElementById('videoPlayToggle')
   const muteToggle = document.getElementById('videoMuteToggle')
-  const PLAY_PATH = 'M8 5v14l11-7z'
-  const PAUSE_PATH = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'
 
   const paintPlayToggle = () => {
     const paused = gameState.userPaused
@@ -169,16 +192,16 @@
   }
 
   // ---------------------------------------------------------------- Live Numbers / Stats Count Up
-  const countUp = (el, to, suffix = '') => {
+  const countUp = (el, to, suffix = '', prefix = '') => {
     if (reduced) {
-      el.textContent = to.toLocaleString('en-US') + suffix
+      el.textContent = prefix + to.toLocaleString('en-US') + suffix
       return
     }
     const start = performance.now()
     const tick = (now) => {
       const t = Math.min(1, (now - start) / 1400)
       const val = Math.round(to * (1 - Math.pow(1 - t, 3)))
-      el.textContent = val.toLocaleString('en-US') + suffix
+      el.textContent = prefix + val.toLocaleString('en-US') + suffix
       if (t < 1) requestAnimationFrame(tick)
     }
     requestAnimationFrame(tick)
@@ -189,8 +212,8 @@
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const target = Number(entry.target.dataset.count)
-        const suffix = entry.target.dataset.suffix || ''
-        countUp(entry.target, target, suffix)
+        const { suffix = '', prefix = '' } = entry.target.dataset
+        countUp(entry.target, target, suffix, prefix)
         observer.unobserve(entry.target)
       }
     })
@@ -326,11 +349,45 @@ $ oneengine build --target=windows-x64 --release
     if (stageCode) stageCode.innerHTML = data.code
   }
 
+  // Auto-rotation: stops for good once the visitor picks a tab or presses Pause,
+  // and pauses while the pointer or keyboard focus is inside the section
+  const rotateToggle = document.getElementById('rotateToggle')
+  let rotationStopped = reduced || styleTabs.length === 0
+  let rotationHeld = false
+
+  const syncRotation = () => {
+    clearInterval(sysTimer)
+    if (rotationStopped || rotationHeld) return
+    sysTimer = setInterval(() => {
+      curSysIndex = (curSysIndex + 1) % styleTabs.length
+      switchSystem(styleTabs[curSysIndex].dataset.id, styleTabs[curSysIndex])
+    }, 5000)
+  }
+  const paintRotateToggle = () => {
+    if (!rotateToggle) return
+    rotateToggle.querySelector('span').textContent = rotationStopped ? 'Resume auto-rotate' : 'Pause auto-rotate'
+    rotateToggle.querySelector('path').setAttribute('d', rotationStopped ? PLAY_PATH : PAUSE_PATH)
+  }
+  const stopRotation = () => {
+    rotationStopped = true
+    syncRotation()
+    paintRotateToggle()
+  }
+
+  if (rotateToggle && !reduced && styleTabs.length) {
+    rotateToggle.hidden = false
+    rotateToggle.addEventListener('click', () => {
+      rotationStopped = !rotationStopped
+      syncRotation()
+      paintRotateToggle()
+    })
+  }
+
   styleTabs.forEach((tab, i) => {
     tab.addEventListener('click', () => {
       curSysIndex = i
       switchSystem(tab.dataset.id, tab)
-      clearInterval(sysTimer)
+      stopRotation()
     })
   })
 
@@ -346,30 +403,20 @@ $ oneengine build --target=windows-x64 --release
     else if (e.key === 'End') next = last
     if (next < 0) return
     e.preventDefault()
-    clearInterval(sysTimer)
+    stopRotation()
     styleTabs[next].focus()
     switchSystem(styleTabs[next].dataset.id, styleTabs[next])
   })
 
-  const autoSwitch = () => {
-    clearInterval(sysTimer)
-    if (!reduced) {
-      sysTimer = setInterval(() => {
-        curSysIndex = (curSysIndex + 1) % styleTabs.length
-        const nextTab = styleTabs[curSysIndex]
-        if (nextTab) switchSystem(nextTab.dataset.id, nextTab)
-      }, 5000)
-    }
-  }
-
-  stageSection?.addEventListener('pointerenter', () => clearInterval(sysTimer))
-  stageSection?.addEventListener('pointerleave', autoSwitch)
-  // Keyboard users: stop auto-rotation while focus is inside the section
-  stageSection?.addEventListener('focusin', () => clearInterval(sysTimer))
+  const hold = (on) => { rotationHeld = on; syncRotation() }
+  stageSection?.addEventListener('pointerenter', () => hold(true))
+  stageSection?.addEventListener('pointerleave', () => hold(false))
+  stageSection?.addEventListener('focusin', () => hold(true))
   stageSection?.addEventListener('focusout', (e) => {
-    if (!stageSection.contains(e.relatedTarget)) autoSwitch()
+    if (!stageSection.contains(e.relatedTarget)) hold(false)
   })
-  autoSwitch()
+  paintRotateToggle()
+  syncRotation()
 
   // ---------------------------------------------------------------- Engine Tuner / Telemetry Bars
   const telemetryPresets = {
@@ -381,10 +428,17 @@ $ oneengine build --target=windows-x64 --release
   }
 
   const bars = [...document.querySelectorAll('.eq span')]
-  const setTelemetry = (levels) => {
+  const barNames = [...document.querySelectorAll('.eq-labels span')].map((el) => el.textContent)
+  const eqCard = document.getElementById('eqCard')
+  const setTelemetry = (levels, profileName) => {
     levels.forEach((val, i) => {
       if (bars[i]) bars[i].style.height = `${val}%`
     })
+    // The chart is role="img", so its values live in the accessible name
+    if (eqCard && profileName) {
+      const values = levels.map((val, i) => `${barNames[i] || 'bar ' + (i + 1)} ${val}%`).join(', ')
+      eqCard.setAttribute('aria-label', `Illustrative pipeline load for the ${profileName} profile: ${values}`)
+    }
   }
 
   const presetBtns = [...document.querySelectorAll('.presets button')]
@@ -395,7 +449,7 @@ $ oneengine build --target=windows-x64 --release
       b.tabIndex = on ? 0 : -1
     })
     const levels = telemetryPresets[btn.dataset.preset]
-    if (levels) setTelemetry(levels)
+    if (levels) setTelemetry(levels, btn.textContent.trim())
   }
   presetBtns.forEach((btn) => btn.addEventListener('click', () => selectPreset(btn)))
 
@@ -414,7 +468,8 @@ $ oneengine build --target=windows-x64 --release
     presetBtns[next].focus()
     selectPreset(presetBtns[next])
   })
-  setTelemetry(telemetryPresets.competitive)
+  const initialPreset = presetBtns.find((b) => b.getAttribute('aria-checked') === 'true')
+  if (initialPreset) selectPreset(initialPreset)
 
   // ---------------------------------------------------------------- Mobile nav
   const siteNav = document.querySelector('.nav')
@@ -435,5 +490,104 @@ $ oneengine build --target=windows-x64 --release
       }
     })
     matchMedia('(min-width: 701px)').addEventListener('change', (e) => { if (e.matches) setNavOpen(false) })
+  }
+
+  // ---------------------------------------------------------------- GitHub releases
+  // Versions, sizes and dates come from the GitHub API, so the site never states a build that doesn't exist
+  const REPO = 'oneenginedev/oneengine'
+  const REPO_URL = `https://github.com/${REPO}`
+  const versionEls = document.querySelectorAll('[data-release-version]')
+  const dlTitle = document.querySelector('[data-release-title]')
+  const dlStatus = document.querySelector('[data-release-status]')
+  const dlLink = document.querySelector('[data-release-link]')
+  const releaseList = document.getElementById('releaseList')
+
+  if (versionEls.length || dlStatus || releaseList) {
+    const loadReleases = async () => {
+      const key = 'oe-releases'
+      try {
+        const cached = JSON.parse(sessionStorage.getItem(key))
+        if (cached && Date.now() - cached.t < 10 * 60 * 1000) return cached.data
+      } catch {}
+      const res = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=20`, {
+        headers: { Accept: 'application/vnd.github+json' }
+      })
+      if (!res.ok) throw new Error(`GitHub API ${res.status}`)
+      const data = (await res.json()).filter((r) => !r.draft)
+      try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), data })) } catch {}
+      return data
+    }
+    const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+    const fmtSize = (bytes) => (bytes >= 1048576 ? `${(bytes / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`)
+    const el = (tag, cls, text) => {
+      const node = document.createElement(tag)
+      if (cls) node.className = cls
+      if (text) node.textContent = text
+      return node
+    }
+
+    const render = (releases) => {
+      // releases === null means the API call failed: keep the static fallback copy
+      if (!releases) {
+        if (releaseList) {
+          releaseList.replaceChildren(el('p', 'release-empty', 'Release notes could not be loaded right now. '))
+          const a = el('a', 'text-link', 'See releases on GitHub')
+          a.href = `${REPO_URL}/releases`
+          releaseList.firstChild.append(a)
+        }
+        return
+      }
+      const latest = releases.find((r) => !r.prerelease) || releases[0]
+
+      versionEls.forEach((node) => {
+        node.textContent = latest ? `${latest.tag_name} · ${fmtDate(latest.published_at)}` : 'No public release yet'
+      })
+
+      if (dlStatus && dlLink) {
+        if (latest) {
+          const asset = latest.assets.find((a) => /\.(exe|zip|msi)$/i.test(a.name))
+          if (dlTitle) dlTitle.textContent = `Download OneEngine ${latest.tag_name}`
+          if (asset) {
+            dlStatus.textContent = `${asset.name}, ${fmtSize(asset.size)}, published ${fmtDate(latest.published_at)}.`
+            dlLink.href = asset.browser_download_url
+            dlLink.querySelector('span').textContent = `Download ${asset.name}`
+          } else {
+            dlStatus.textContent = `Published ${fmtDate(latest.published_at)}. Pick a file from the release page.`
+            dlLink.href = latest.html_url
+            dlLink.querySelector('span').textContent = `Open ${latest.tag_name} on GitHub`
+          }
+        } else {
+          if (dlTitle) dlTitle.textContent = 'No public build yet'
+          dlStatus.textContent = 'OneEngine has not published a release on GitHub yet. Watch the repository to hear when the first build is out.'
+          dlLink.href = REPO_URL
+          dlLink.querySelector('span').textContent = 'Watch on GitHub'
+        }
+      }
+
+      if (releaseList) {
+        if (!releases.length) {
+          releaseList.replaceChildren(el('p', 'release-empty', 'No releases have been published yet. The first build will appear here with its notes.'))
+          return
+        }
+        releaseList.replaceChildren(...releases.map((r) => {
+          const item = el('article', 'release')
+          const head = el('header', 'release-head')
+          const title = el('h2', '', r.name || r.tag_name)
+          const meta = el('p', 'release-meta')
+          const time = el('time', '', fmtDate(r.published_at))
+          time.dateTime = r.published_at
+          meta.append(`${r.tag_name} · `, time)
+          if (r.prerelease) meta.append(' · ', el('span', 'release-pre', 'Pre-release'))
+          head.append(title, meta)
+          const body = el('p', 'release-body', (r.body || 'No notes for this release.').trim())
+          const link = el('a', 'text-link', 'View on GitHub')
+          link.href = r.html_url
+          item.append(head, body, link)
+          return item
+        }))
+      }
+    }
+
+    loadReleases().then(render).catch(() => render(null))
   }
 })()

@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="nav">
       <a class="brand" href="index.html" aria-label="OneEngine home">
         <svg class="mark" viewBox="0 0 1024 1024" aria-hidden="true">
@@ -30,7 +32,7 @@
       <a class="btn btn-line btn-small" href="index.html">Back to site</a>
     </header>
 
-    <main class="dl-page">
+    <main class="dl-page" id="main" tabindex="-1">
       <div>
         <div class="hero-mark" aria-hidden="true">
           <span class="ping"></span>
@@ -48,9 +50,10 @@
         </div>
         <h1>Page not found</h1>
         <p class="status">That page doesn't exist or has moved. Try one of these instead.</p>
-        <div class="cta" style="justify-content:center">
+        <div class="cta">
           <a class="btn btn-ink" href="index.html">Back to home</a>
           <a class="text-link" href="download.html">Download</a>
+          <a class="text-link" href="changelog.html">Changelog</a>
           <a class="text-link" href="store/">Store</a>
         </div>
       </div>
