@@ -235,6 +235,28 @@
     })
   }
 
+  // ---------------------------------------------------------------- Current section in the nav
+  // Marks the link whose section crosses the middle of the screen, so readers know where they are.
+  const sectionLinks = [...document.querySelectorAll('#siteNav a[href^="#"]')]
+    .map((a) => [a, document.getElementById(a.hash.slice(1))])
+    .filter(([, section]) => section)
+  if (sectionLinks.length) {
+    const markCurrent = (id) => {
+      for (const [a, section] of sectionLinks) {
+        if (section.id === id) a.setAttribute('aria-current', 'true')
+        else a.removeAttribute('aria-current')
+      }
+    }
+    const spy = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) markCurrent(entry.target.id)
+        // Above the first linked section (the hero), nothing is current
+        else if (entry.target === sectionLinks[0][1] && entry.boundingClientRect.top > 0) markCurrent(null)
+      }
+    }, { rootMargin: '-45% 0px -50% 0px' })
+    for (const [, section] of sectionLinks) spy.observe(section)
+  }
+
   // ---------------------------------------------------------------- Mobile nav
   const siteNav = document.querySelector('.nav')
   const navToggle = document.querySelector('.nav-toggle')

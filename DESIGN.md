@@ -54,7 +54,7 @@ Each system card sets `--sys` for the coloured rule on its top edge: `#7c5cfa`, 
 | `--section-y` | `clamp(72px, 9vw, 128px)` | Vertical padding of every section |
 | `--head-gap` | `clamp(32px, 4vw, 48px)` | Space between a section heading block and its content |
 
-Sections pad themselves with `max(var(--gutter), calc((100% - var(--page-max)) / 2))`, so content lines up with the nav at every width. The FAQ uses a narrower 780px measure.
+Sections pad themselves with `max(var(--gutter), calc((100% - var(--page-max)) / 2))`, so content lines up with the nav at every width. The FAQ uses a narrower 780px measure. Sections are separated by space, not divider lines. Body copy is 16px or larger; nothing meant to be read is under 13px except the runtime window's title bar.
 
 ### Shape and depth
 
@@ -94,12 +94,12 @@ Headings use `letter-spacing: -0.03em`, `line-height: 1.05` and `text-wrap: bala
 ## 4. Page structure (`index.html`)
 
 1. **Hero.** Wordmark (h1), lead, Download (primary) + View on GitHub (secondary), one meta line, and the laptop with a gameplay loop and a pause button.
-2. **Architecture** (`#systems`, dark band). Six static cards: ECS Core, Rollback Netcode, Hot Reload, In-Situ Editor, Deterministic Replays, Single-Binary Builds. Three columns, two on tablets, one on phones.
-3. **Built with OneEngine** (`#features`). Railbound video with Play/Pause and Mute, genre tags, description and a store link.
+2. **Architecture** (`#systems`, dark band). An unboxed list of six systems (ECS Core, Rollback Netcode, Hot Reload, In-Situ Editor, Deterministic Replays, Single-Binary Builds): each is a short bar in its `--sys` colour, a heading and one sentence. Three columns, two on tablets, one on phones.
+3. **Built with OneEngine** (`#features`). Railbound video with Play/Pause and Mute; beside it a card that hugs its content: genre tags, description and the store button. The section heading names the game, so the card does not repeat it.
 4. **Services** (`#services`). Two cards with text-link actions (no competing solid buttons).
-5. **Get started** (`#download`). Windows card, Linux/macOS card and the philosophy quote card in one grid.
+5. **Get started** (`#download`). Windows card, Linux/macOS card and the philosophy quote card (no badge) in one grid.
 6. **FAQ** (`#faq`).
-7. **Footer.** About, Product, Project and Help & contact columns.
+7. **Footer.** On `--paper-2` (a tone step, not a rule). About, Product, Project and Help & contact columns, then the name set full width in Unbounded (`.foot-word`, sized with `cqi` so it spans the footer at every width; decorative, `aria-hidden`).
 
 `download.html` reads the latest GitHub release and shows its file, size and date, or "No public build yet" when there is none. `changelog.html` lists every release from the GitHub API. Both have static fallbacks without JavaScript.
 
@@ -108,10 +108,13 @@ Headings use `letter-spacing: -0.03em`, `line-height: 1.05` and `text-wrap: bala
 - **Buttons.** 52px tall (38px for `.btn-small`), pill radius, 650 weight. `.btn-ink` is solid ink with white text. `.btn-line` has a 1.5px `--line` border on `--card`. Pressing scales to 0.97 (not under reduced motion). `.text-link` is violet, weight 600.
 - **Nav.** Full-width white bar (max `--page-max`), fixed 16px from the top, blurred backdrop. Brand left, five section links (Systems, Games, Services, Store, FAQ) centred with tinted icons, GitHub `</>` button and the primary "Download" button right. Icons hide below 1120px. At 700px and below the links move into a menu (`.nav-toggle`) that closes on link click, outside click and Escape. Below 480px the GitHub button hides so Download always stays visible.
 - **Skip link.** First focusable element on every page, jumps to `#main`.
-- **System cards.** A `<ul>` of six cards on `--dark-2` with a 3px top rule in each card's `--sys` colour. Static: no tabs, no rotation.
+- **System list.** A `<ul>` of six unboxed items: a 40 × 4px bar in the item's `--sys` colour, a 21–25px heading and a 16.5px sentence. Static: no tabs, no rotation.
+- **Current section.** `site.js` marks the nav link whose section crosses the middle of the screen with `aria-current="true"`, styled as the link's hover tint.
 - **Hero motion toggle.** Round button on the laptop screen that pauses and resumes the video and the fire canvas.
 - **Game card.** Video with Play/Pause and Mute, genre list, description and a "Play in OneEngine Store" button. No ratings, prices or specs.
-- **FAQ.** Native `<details>` with a `+` marker.
+- **Service labels.** Sentence case in violet at 14px; no tiny uppercase pills.
+- **FAQ.** Native `<details>` with a `+` marker. Where the browser supports `::details-content` and `interpolate-size`, answers open with a 220ms height and fade and close in 140ms; elsewhere they open instantly.
+- **Changelog releases.** Fade and rise 8px into place via `@starting-style`, staggered 50ms.
 - **Focus.** `2.5px solid var(--violet)`, 3px offset; `--violet-on-dark` inside dark panels.
 - **Browser surfaces.** Text selection, the caret, form accents and the scrollbar use the palette; link underlines sit 0.18em below the text at 1px.
 

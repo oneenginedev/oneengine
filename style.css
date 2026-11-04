@@ -310,6 +310,11 @@ p, li, dd, summary {
   transition: color 140ms, background-color 140ms;
 }
 
+.nav nav a[aria-current='true'] {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--i, var(--violet)) 12%, transparent);
+}
+
 .nav nav a:hover {
   color: var(--ink);
   background: color-mix(in srgb, var(--i, var(--violet)) 10%, transparent);
@@ -702,30 +707,37 @@ section {
 .system-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: clamp(36px, 4vw, 56px) clamp(28px, 3.5vw, 56px);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* Unboxed: a short bar in the system's colour, then a heading and its sentence */
 .system-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: clamp(22px, 2.6vw, 30px);
-  border: 1px solid rgb(255 255 255 / 0.08);
-  border-top: 3px solid var(--sys, var(--style-accent));
-  border-radius: 22px;
-  background: var(--dark-2);
+  gap: 12px;
+}
+
+.system-card::before {
+  content: '';
+  width: 40px;
+  height: 4px;
+  margin-bottom: 8px;
+  border-radius: 999px;
+  background: var(--sys, var(--style-accent));
 }
 
 .system-card h3 {
   color: #fff;
+  font-size: clamp(21px, 1.9vw, 25px);
 }
 
 .system-card p {
+  max-width: 38ch;
   color: var(--on-dark-2);
-  font-size: 15.5px;
+  font-size: 16.5px;
   line-height: 1.55;
 }
 
@@ -775,9 +787,8 @@ section {
   background: rgba(14, 12, 29, 0.85);
   backdrop-filter: blur(8px);
   color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 12.5px;
+  font-weight: 650;
   border: 1px solid rgba(255, 255, 255, 0.15);
   z-index: 10;
 }
@@ -805,7 +816,7 @@ html.motion-paused .live-dot {
   display: grid;
   grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.92fr);
   gap: 28px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .game-video-card {
@@ -887,6 +898,12 @@ html.motion-paused .live-dot {
   background: var(--card);
 }
 
+.game-info-card p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
 .game-info-card {
   border-radius: var(--radius);
   border: 1px solid var(--line);
@@ -903,7 +920,6 @@ html.motion-paused .live-dot {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: auto;
   padding-top: 8px;
 }
 
@@ -920,7 +936,7 @@ html.motion-paused .live-dot {
   padding: 3px 9px;
   border-radius: 999px;
   background: var(--paper-2);
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--ink-2);
 }
@@ -928,7 +944,7 @@ html.motion-paused .live-dot {
 /* ---------------------------------------------------------------- services */
 
 .services {
-  border-top: 1px solid var(--line);
+  padding-top: calc(var(--section-y) * 0.6);
 }
 
 .services-grid {
@@ -975,14 +991,9 @@ html.motion-paused .live-dot {
 }
 
 .service-pill {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 14px;
+  font-weight: 650;
   color: var(--violet);
-  background: rgba(91, 61, 245, 0.08);
-  padding: 4px 12px;
-  border-radius: 999px;
 }
 
 .service-card h3 {
@@ -994,7 +1005,7 @@ html.motion-paused .live-dot {
 }
 
 .service-card > p {
-  font-size: 15.5px;
+  font-size: 16px;
   color: var(--ink-2);
   line-height: 1.6;
   margin-bottom: 24px;
@@ -1013,7 +1024,7 @@ html.motion-paused .live-dot {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 14.5px;
+  font-size: 15.5px;
   color: var(--ink-2);
   line-height: 1.5;
 }
@@ -1030,8 +1041,7 @@ html.motion-paused .live-dot {
 
 .service-footer {
   margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
+  padding-top: 8px;
   display: flex;
   align-items: center;
 }
@@ -1050,20 +1060,6 @@ html.motion-paused .live-dot {
   gap: 20px;
 }
 
-.maker-card .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: rgba(124, 92, 250, 0.16);
-  border: 1px solid rgba(124, 92, 250, 0.3);
-  color: var(--violet-on-dark);
-  font-size: 13px;
-  font-weight: 600;
-  width: fit-content;
-}
-
 .manifesto-quote {
   margin: 0;
   font-size: clamp(19px, 1.8vw, 22px);
@@ -1075,7 +1071,7 @@ html.motion-paused .live-dot {
 /* ---------------------------------------------------------------- download */
 
 .download {
-  border-top: 1px solid var(--line);
+  padding-top: calc(var(--section-y) * 0.6);
 }
 
 .dl-grid {
@@ -1107,7 +1103,7 @@ html.motion-paused .live-dot {
 
 .dl-card p {
   color: var(--ink-2);
-  font-size: 15.5px;
+  font-size: 16px;
 }
 
 .dl-card .cta {
@@ -1132,7 +1128,6 @@ html.motion-paused .live-dot {
 
 .faq {
   padding-inline: max(var(--gutter), calc((100% - 780px) / 2));
-  border-top: 1px solid var(--line);
 }
 
 .faq h2 {
@@ -1179,6 +1174,26 @@ html.motion-paused .live-dot {
   font-size: 0.88em;
 }
 
+@supports (interpolate-size: allow-keywords) {
+  .faq {
+    interpolate-size: allow-keywords;
+  }
+  .faq details::details-content {
+    height: 0;
+    opacity: 0;
+    overflow: clip;
+    transition: height 220ms var(--ease), opacity 220ms var(--ease), content-visibility 220ms allow-discrete;
+  }
+  .faq details[open]::details-content {
+    height: auto;
+    opacity: 1;
+  }
+  /* Closing is quicker than opening: the visitor is done with it */
+  .faq details:not([open])::details-content {
+    transition-duration: 140ms;
+  }
+}
+
 .faq details p {
   margin-top: 14px;
   color: var(--ink-2);
@@ -1189,7 +1204,7 @@ html.motion-paused .live-dot {
 /* ---------------------------------------------------------------- footer */
 
 .foot {
-  border-top: 1px solid var(--line);
+  background: var(--paper-2);
   padding: 56px max(var(--gutter), calc((100% - var(--page-max)) / 2)) 48px;
   display: flex;
   flex-direction: column;
@@ -1250,6 +1265,23 @@ html.motion-paused .live-dot {
   color: var(--ink-3);
 }
 
+.foot-word {
+  margin: 8px 0 -0.06em;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 600;
+  /* sized from the footer's width so the word spans it at every size */
+  font-size: clamp(40px, 15.6cqi, 220px);
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  color: var(--ink);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.foot {
+  container-type: inline-size;
+}
+
 .foot-slim {
   padding-top: 32px;
   padding-bottom: 32px;
@@ -1258,7 +1290,7 @@ html.motion-paused .live-dot {
 /* ---------------------------------------------------------------- download page */
 
 .dl-page {
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1358,6 +1390,21 @@ html.motion-paused .live-dot {
   border-radius: var(--radius);
   background: var(--card);
 }
+
+.release {
+  transition: opacity 260ms var(--ease), transform 260ms var(--ease);
+}
+
+@starting-style {
+  .release {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.release:nth-child(2) { transition-delay: 50ms; }
+.release:nth-child(3) { transition-delay: 100ms; }
+.release:nth-child(n + 4) { transition-delay: 150ms; }
 
 .release-head h2 {
   font-size: 24px;
