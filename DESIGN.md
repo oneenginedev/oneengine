@@ -79,7 +79,7 @@ Headings use `letter-spacing: -0.03em` and `line-height: 1.05`. Small uppercase 
 ## 4. Components
 
 - **Buttons.** 52px tall (38px for `.btn-small`), pill radius, 650 weight. `.btn-ink` is solid ink with white text. `.btn-line` has a 1.5px `--line` border on `--card`. Pressing scales to 0.97. `.text-link` is violet, weight 600.
-- **Nav.** A floating white pill, fixed 16px from the top, with a blurred backdrop. At 700px and below the links collapse into a menu button (`.nav-toggle`). The menu closes on link click, outside click and Escape. Below 480px the "Open Store" button hides and the Store link lives in the menu.
+- **Nav.** A full-width white bar (24px from each edge, max 1240px), fixed 16px from the top with a blurred backdrop. Brand on the left, links centred, a round GitHub `</>` button and "Open Store" on the right. Each link has a 16px stroke icon tinted with its own `--i` colour, and hover gives the link a 10% tint of that colour. Below 1120px the link icons hide so the links fit on one row. At 700px and below the links collapse into a menu button (`.nav-toggle`) and the icons come back in the menu. The menu closes on link click, outside click and Escape. Below 480px the "Open Store" button hides and the Store link lives in the menu.
 - **Systems tabs.** A six-button tablist driving one tabpanel (`#stagePanel`). Left/Right move between tabs, Home/End jump, and focus uses a roving tabindex. Tabs rotate every 5 seconds until the pointer or keyboard focus enters the section.
 - **Performance presets.** A radio group with a roving tabindex. Arrow keys move and select, Home/End jump.
 - **Game card.** Shows a video, tags, specs and a rating and price row. The rating and price are sample data and carry a visible "Sample data" note.
@@ -99,6 +99,7 @@ The store is a built single-page app (Vite output with Tailwind classes). Only t
 - **Shared with the site:** the violet accent `#7c5cfa`, JetBrains Mono for code and numbers, and a "OneEngine Site" pill that links back.
 - **Different on purpose:** it is a dark app shell (`#07090C` background, light text) and uses Inter for UI text where the site uses Figtree.
 - The store's accent used to be orange `#FF7A00`. It was replaced with the site's violet.
+- A fixed "Sample data" note sits next to the "OneEngine Site" pill (both in `store/index.html`, outside the app bundle), because the store's prices, discounts, ratings and reviews are placeholders.
 
 ## 7. Conventions
 
