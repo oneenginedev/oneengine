@@ -31,12 +31,12 @@ Then open http://localhost:8000. Do not open `index.html` straight from disk: th
 
 ## Structure
 
-- `index.html`: landing page: hero, architecture (systems tabs), profiling (telemetry presets), game showcase, services, get started (download cards and philosophy) and FAQ.
+- `index.html`: landing page: hero, architecture cards, Railbound showcase, services, get started (download cards and philosophy) and FAQ.
 - `download.html`: shows the latest GitHub release with its file, size and date, or "No public build yet".
 - `changelog.html`: release notes for every GitHub release.
 - `404.html`: not-found page. Its `<base href>` must match the site URL above.
 - `style.css`: all site styles. The `:root` tokens at the top are the single source of truth.
-- `site.js`: fire canvas, hero pause control, stat count-up, systems tabs with pause control, telemetry presets, video playback, mobile nav, and GitHub release data.
+- `site.js`: fire canvas, hero pause control, video playback, mobile nav, and GitHub release data.
 - `store/`: the pre-built store app (build output only; `assets/` is what `index.html` loads, and the copies in the `store/` root are unused).
 - `sitemap.xml`, `robots.txt`: search engine files.
 - `og-image.jpg`: 1200 × 630 social preview image.
@@ -69,11 +69,11 @@ ffmpeg -i gameplay-preview.mp4 -vf scale=1280:-2 -c:v libvpx-vp9 -crf 46 -b:v 0 
 
 Versions, file sizes and dates are not written by hand. `site.js` reads them from the GitHub Releases API for `oneenginedev/oneengine` and caches them for 10 minutes per tab. To publish a build, create a release on GitHub and attach the Windows `.exe`, `.zip` or `.msi`: the download page links straight to that file and the changelog lists the release notes. With no releases, both pages say so.
 
-## Figures and sample data
+## No mock data
 
-- Engine figures (128Hz, 100k entities, <7ms, 12MB, 14ms reload, 60KB replays and so on) are labelled as **v1.0 design targets**. Replace the label with a source once they are measured.
-- The telemetry chart is labelled **illustrative**.
-- The Railbound rating and price, and the store's prices, ratings and reviews, are labelled **sample data**. Replace them with real figures once the game is on sale.
+The marketing pages contain no unmeasured engine figures, demo benchmarks, ratings or prices. Only add a number once it is measured and you can link to its source.
+
+The prebuilt store in `store/` still ships sample prices, ratings and reviews inside its bundle; `store/index.html` shows a "Sample data" note for them.
 
 ## License
 
