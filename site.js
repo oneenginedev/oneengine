@@ -26,11 +26,23 @@
     let w = (fireCanvas.width = fireCanvas.offsetWidth || 500)
     let h = (fireCanvas.height = fireCanvas.offsetHeight || 310)
 
-    const resize = () => {
-      w = fireCanvas.width = fireCanvas.offsetWidth
-      h = fireCanvas.height = fireCanvas.offsetHeight
+    // Pre-render one flame sprite. Drawing it scaled with globalAlpha is much cheaper
+    // than building a radial gradient (and five colour strings) per particle per frame.
+    const SPRITE = 64
+    const sprite = document.createElement('canvas')
+    sprite.width = sprite.height = SPRITE
+    {
+      const sctx = sprite.getContext('2d')
+      const r = SPRITE / 2
+      const grad = sctx.createRadialGradient(r, r, 0, r, r, r)
+      grad.addColorStop(0,    'rgba(255,255,220,0.95)') // white-yellow core
+      grad.addColorStop(0.25, 'rgba(255,200, 50,0.85)')
+      grad.addColorStop(0.55, 'rgba(255, 80, 10,0.65)')
+      grad.addColorStop(0.80, 'rgba(180, 20,  0,0.35)')
+      grad.addColorStop(1,    'rgba( 80,  0,  0,0)')
+      sctx.fillStyle = grad
+      sctx.fillRect(0, 0, SPRITE, SPRITE)
     }
-    window.addEventListener('resize', resize)
 
     // Fire particle class
     class FireParticle {
@@ -57,18 +69,9 @@
         if (this.life <= 0 || this.y < -20) this.reset()
       }
       draw(ctx) {
-        const alpha = Math.max(0, this.life)
-        // Inner core: bright white-yellow
-        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius)
-        grad.addColorStop(0,   `rgba(255,255,220,${alpha * 0.95})`)
-        grad.addColorStop(0.25,`rgba(255,200, 50,${alpha * 0.85})`)
-        grad.addColorStop(0.55,`rgba(255, 80, 10,${alpha * 0.65})`)
-        grad.addColorStop(0.80,`rgba(180, 20,  0,${alpha * 0.35})`)
-        grad.addColorStop(1,   `rgba( 80,  0,  0,0)`)
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        ctx.fillStyle = grad
-        ctx.fill()
+        ctx.globalAlpha = Math.max(0, this.life)
+        const d = this.radius * 2
+        ctx.drawImage(sprite, this.x - this.radius, this.y - this.radius, d, d)
       }
     }
 
@@ -93,11 +96,10 @@
         if (this.life <= 0 || this.y < -20) this.reset()
       }
       draw(ctx) {
-        const alpha = Math.max(0, this.life)
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,220,80,${alpha * 0.9})`
-        ctx.fill()
+        // Specks are under 2.5px wide, so a square is indistinguishable from a circle
+        ctx.globalAlpha = Math.max(0, this.life) * 0.9
+        const d = this.radius * 2
+        ctx.fillRect(this.x - this.radius, this.y - this.radius, d, d)
       }
     }
 
@@ -112,7 +114,9 @@
       // Composite: 'lighter' adds colours so overlapping flames glow brighter
       ctx.globalCompositeOperation = 'lighter'
       for (const p of fireParticles) { p.update(); p.draw(ctx) }
+      ctx.fillStyle = 'rgb(255,220,80)'
       for (const e of embers) { e.update(); e.draw(ctx) }
+      ctx.globalAlpha = 1
       ctx.globalCompositeOperation = 'source-over'
     }
 
@@ -130,6 +134,13 @@
       else if (!run) { cancelAnimationFrame(fireRaf); fireRaf = 0 }
     }
     watchVisibility(fireCanvas, (on) => { fireVisible = on; syncFire() }, 0)
+
+    // Resizing a canvas clears it, so redraw straight away when the loop isn't running
+    new ResizeObserver(() => {
+      w = fireCanvas.width = fireCanvas.offsetWidth
+      h = fireCanvas.height = fireCanvas.offsetHeight
+      if (!fireRaf) drawFire()
+    }).observe(fireCanvas)
   }
 
   // ---------------------------------------------------------------- Videos: play only while visible

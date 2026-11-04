@@ -25,11 +25,9 @@ This document describes the site as it is built today. The source of truth for t
 | `--line` | `#e1e0ea` | Borders and dividers |
 | `--violet` | `#5b3df5` | Brand accent, links, eyebrows, focus ring on light |
 | `--cyan` | `#2fd3e6` | Secondary accent (brand mark, system card rules) |
-| `--grad` | `linear-gradient(120deg, violet, cyan)` | Reserved for the brand mark |
 | `--style-accent` | `#7c5cfa` | Glow behind the architecture band |
 | `--dark` | `#0c0b14` | Architecture band, philosophy card |
 | `--dark-2` | `#141320` | System cards inside the band |
-| `--dark-code` | `#090812` | Reserved for code blocks |
 | `--on-dark` | `#f4f2fb` | Primary text on dark |
 | `--on-dark-2` | `#b9b6c9` | Body text on dark |
 | `--on-dark-3` | `#a19eb3` | Labels and captions on dark |

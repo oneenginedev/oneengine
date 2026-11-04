@@ -9,13 +9,11 @@
   --line: #e1e0ea;
   --violet: #5b3df5;
   --cyan: #2fd3e6;
-  --grad: linear-gradient(120deg, var(--violet), var(--cyan));
   --style-accent: #7c5cfa;
 
   /* dark engine panels */
   --dark: #0c0b14;
   --dark-2: #141320;
-  --dark-code: #090812;
   --on-dark: #f4f2fb;
   --on-dark-2: #b9b6c9;
   --on-dark-3: #a19eb3;
@@ -642,7 +640,6 @@ section {
   height: 80%;
   z-index: -1;
   background: radial-gradient(closest-side, color-mix(in oklab, var(--style-accent) 45%, transparent), transparent);
-  transition: background 700ms;
   filter: blur(50px);
 }
 
@@ -720,13 +717,6 @@ section {
 }
 
 /* ---------------------------------------------------------------- gameplay showcase & video */
-
-.screen-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
 
 .live-gameplay-pill {
   position: absolute;
