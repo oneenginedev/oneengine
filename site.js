@@ -2,6 +2,17 @@
 ;(() => {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
 
+  // Calls onChange(true|false) as an element enters/leaves the viewport or the tab is hidden/shown
+  const watchVisibility = (el, onChange, threshold = 0.2) => {
+    let inView = false
+    const update = () => onChange(inView && !document.hidden)
+    new IntersectionObserver((entries) => {
+      inView = entries[entries.length - 1].isIntersecting
+      update()
+    }, { threshold }).observe(el)
+    document.addEventListener('visibilitychange', update)
+  }
+
   // ---------------------------------------------------------------- Fire Particle Canvas Overlay
   const fireCanvas = document.getElementById('fireCanvas')
   if (fireCanvas) {
@@ -89,7 +100,7 @@
     const fireParticles = Array.from({ length: FIRE_COUNT }, () => new FireParticle())
     const embers = Array.from({ length: EMBER_COUNT }, () => new Ember())
 
-    const render = () => {
+    const drawFire = () => {
       ctx.clearRect(0, 0, w, h)
 
       // Composite: 'lighter' adds colours so overlapping flames glow brighter
@@ -97,167 +108,64 @@
       for (const p of fireParticles) { p.update(); p.draw(ctx) }
       for (const e of embers) { e.update(); e.draw(ctx) }
       ctx.globalCompositeOperation = 'source-over'
-
-      if (!reduced) requestAnimationFrame(render)
     }
-    render()
+
+    // Only animate while the canvas is on screen and the tab is visible
+    let fireRaf = 0
+    const fireLoop = () => {
+      drawFire()
+      fireRaf = requestAnimationFrame(fireLoop)
+    }
+    drawFire() // one static frame, which is all reduced-motion users get
+    watchVisibility(fireCanvas, (on) => {
+      if (reduced) return
+      if (on && !fireRaf) fireRaf = requestAnimationFrame(fireLoop)
+      else if (!on) { cancelAnimationFrame(fireRaf); fireRaf = 0 }
+    }, 0)
   }
 
-  // ---------------------------------------------------------------- shootPower Canvas Preview
-  const spCanvas = document.getElementById('shootPowerCanvas')
-  if (spCanvas) {
-    const ctx2 = spCanvas.getContext('2d')
-    let sw = (spCanvas.width = spCanvas.offsetWidth || 400)
-    let sh = (spCanvas.height = spCanvas.offsetHeight || 240)
-    window.addEventListener('resize', () => {
-      sw = spCanvas.width = spCanvas.offsetWidth
-      sh = spCanvas.height = spCanvas.offsetHeight
+  // ---------------------------------------------------------------- Videos: play only while visible
+  const videoPlayers = [...document.querySelectorAll('video')].map((video) => {
+    // Reduced-motion visitors start paused and can press Play themselves
+    const state = { video, visible: false, userPaused: reduced }
+    state.sync = () => {
+      if (state.visible && !state.userPaused) video.play()?.catch?.(() => {})
+      else video.pause()
+    }
+    watchVisibility(video, (on) => { state.visible = on; state.sync() }, 0.25)
+    return state
+  })
+
+  const gameState = videoPlayers.find((s) => s.video.id === 'gameplayVideo')
+  const playToggle = document.getElementById('videoPlayToggle')
+  const muteToggle = document.getElementById('videoMuteToggle')
+  const PLAY_PATH = 'M8 5v14l11-7z'
+  const PAUSE_PATH = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'
+
+  const paintPlayToggle = () => {
+    const paused = gameState.userPaused
+    playToggle.querySelector('span').textContent = paused ? 'Play' : 'Pause'
+    playToggle.querySelector('path').setAttribute('d', paused ? PLAY_PATH : PAUSE_PATH)
+    playToggle.setAttribute('aria-label', paused ? 'Play gameplay video' : 'Pause gameplay video')
+  }
+  const paintMuteToggle = () => {
+    const muted = gameState.video.muted
+    muteToggle.querySelector('span').textContent = muted ? 'Unmute' : 'Mute'
+    muteToggle.setAttribute('aria-label', muted ? 'Unmute gameplay video' : 'Mute gameplay video')
+  }
+
+  if (gameState && playToggle && muteToggle) {
+    playToggle.addEventListener('click', () => {
+      gameState.userPaused = !gameState.userPaused
+      gameState.sync()
+      paintPlayToggle()
     })
-
-    // Tiled ground platform
-    const TILE = 18
-    const groundY = sh * 0.72
-
-    // Bullet pool
-    const bullets = []
-
-    // Particle pool (muzzle flash / hit sparks)
-    const spParticles = []
-
-    // Simple soldier state
-    const soldier = { x: sw * 0.18, y: groundY - TILE * 2.2, vy: 0, frame: 0, frameTimer: 0, shooting: false, shootTimer: 0 }
-    const GRAVITY = 0.38
-    const JUMP_V = -7.2
-    let jumpTimer = 0
-
-    // Enemies
-    const enemies = [
-      { x: sw * 0.62, y: groundY - TILE * 2.2, alive: true, flash: 0 },
-      { x: sw * 0.82, y: groundY - TILE * 2.2, alive: true, flash: 0 },
-    ]
-
-    let spFrame = 0
-
-    const drawPixelFigure = (ctx, x, y, color, headColor, w, h, flip) => {
-      ctx.save()
-      if (flip) { ctx.translate(x + w / 2, y); ctx.scale(-1, 1); ctx.translate(-w / 2, 0) }
-      else ctx.translate(x, y)
-      // body
-      ctx.fillStyle = color
-      ctx.fillRect(w * 0.25, h * 0.35, w * 0.5, h * 0.42)
-      // head
-      ctx.fillStyle = headColor
-      ctx.fillRect(w * 0.28, 0, w * 0.44, h * 0.32)
-      // legs
-      ctx.fillStyle = color
-      const legPhase = Math.sin(spFrame * 0.22) * (h * 0.12)
-      ctx.fillRect(w * 0.25, h * 0.77, w * 0.2, h * 0.23 + legPhase)
-      ctx.fillRect(w * 0.55, h * 0.77, w * 0.2, h * 0.23 - legPhase)
-      // arm / gun
-      ctx.fillStyle = '#888'
-      ctx.fillRect(w * 0.68, h * 0.4, w * 0.38, h * 0.1)
-      ctx.restore()
-    }
-
-    const spRender = () => {
-      ctx2.clearRect(0, 0, sw, sh)
-
-      // Sky gradient
-      const sky = ctx2.createLinearGradient(0, 0, 0, sh)
-      sky.addColorStop(0, '#0d0b1a')
-      sky.addColorStop(1, '#1a1030')
-      ctx2.fillStyle = sky
-      ctx2.fillRect(0, 0, sw, sh)
-
-      // Stars
-      ctx2.fillStyle = 'rgba(255,255,255,0.55)'
-      for (let i = 0; i < 30; i++) {
-        const sx = ((i * 137 + spFrame * 0.18) % sw)
-        const sy = (i * 53) % (groundY * 0.85)
-        ctx2.fillRect(sx, sy, 1.5, 1.5)
-      }
-
-      // Ground tiles
-      for (let tx = 0; tx < sw; tx += TILE) {
-        ctx2.fillStyle = '#2a3a5c'
-        ctx2.fillRect(tx, groundY, TILE - 1, sh - groundY)
-        ctx2.fillStyle = '#3a5280'
-        ctx2.fillRect(tx, groundY, TILE - 1, 4)
-      }
-
-      // Platform block
-      const platX = sw * 0.44, platW = sw * 0.22
-      ctx2.fillStyle = '#2a3a5c'
-      ctx2.fillRect(platX, groundY - TILE * 2.8, platW, TILE * 0.6)
-      ctx2.fillStyle = '#3a5280'
-      ctx2.fillRect(platX, groundY - TILE * 2.8, platW, 3)
-
-      // Soldier physics
-      soldier.shootTimer++
-      jumpTimer++
-      if (jumpTimer > 90) { soldier.vy = JUMP_V; jumpTimer = 0 }
-      soldier.vy += GRAVITY
-      soldier.y += soldier.vy
-      if (soldier.y >= groundY - TILE * 2.2) { soldier.y = groundY - TILE * 2.2; soldier.vy = 0 }
-
-      // Shoot
-      if (soldier.shootTimer % 28 === 0) {
-        bullets.push({ x: soldier.x + TILE * 1.5, y: soldier.y + TILE, vx: 5.5, life: 1 })
-        spParticles.push({ x: soldier.x + TILE * 1.6, y: soldier.y + TILE, vx: 2, vy: -1, r: 4, life: 1, color: '#ffdd44' })
-      }
-
-      // Draw soldier
-      drawPixelFigure(ctx2, soldier.x, soldier.y, '#4a6fa5', '#c8a97a', TILE * 1.4, TILE * 2.2, false)
-
-      // Bullets
-      ctx2.fillStyle = '#ffdd44'
-      for (let i = bullets.length - 1; i >= 0; i--) {
-        const b = bullets[i]
-        b.x += b.vx
-        b.life -= 0.018
-        if (b.x > sw || b.life <= 0) { bullets.splice(i, 1); continue }
-        // hit check
-        for (const en of enemies) {
-          if (en.alive && Math.abs(b.x - en.x - TILE * 0.7) < TILE && Math.abs(b.y - en.y - TILE) < TILE * 2) {
-            en.flash = 8
-            spParticles.push({ x: en.x + TILE * 0.7, y: en.y + TILE * 0.8, vx: -1.5, vy: -2, r: 6, life: 1, color: '#ff4422' })
-            bullets.splice(i, 1)
-            break
-          }
-        }
-        if (bullets[i]) ctx2.fillRect(b.x, b.y, 6, 3)
-      }
-
-      // Enemies
-      for (const en of enemies) {
-        if (!en.alive) continue
-        if (en.flash > 0) { en.flash--; ctx2.globalAlpha = 0.4 }
-        drawPixelFigure(ctx2, en.x, en.y, '#8b2222', '#c85a5a', TILE * 1.4, TILE * 2.2, true)
-        ctx2.globalAlpha = 1
-      }
-
-      // Particles
-      for (let i = spParticles.length - 1; i >= 0; i--) {
-        const p = spParticles[i]
-        p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life -= 0.05; p.r *= 0.93
-        if (p.life <= 0) { spParticles.splice(i, 1); continue }
-        ctx2.globalAlpha = p.life
-        ctx2.fillStyle = p.color
-        ctx2.beginPath(); ctx2.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx2.fill()
-        ctx2.globalAlpha = 1
-      }
-
-      // HUD
-      ctx2.fillStyle = 'rgba(0,0,0,0.45)'
-      ctx2.fillRect(8, 8, 100, 18)
-      ctx2.fillStyle = '#2fd3e6'
-      ctx2.font = '10px "JetBrains Mono", monospace'
-      ctx2.fillText('HP ████████  AMO 30', 12, 21)
-
-      spFrame++
-      if (!reduced) requestAnimationFrame(spRender)
-    }
-    spRender()
+    muteToggle.addEventListener('click', () => {
+      gameState.video.muted = !gameState.video.muted
+      paintMuteToggle()
+    })
+    paintPlayToggle()
+    paintMuteToggle()
   }
 
   // ---------------------------------------------------------------- Live Numbers / Stats Count Up
@@ -391,6 +299,7 @@ $ oneengine build --target=windows-x64 --release
   const stageStat2Val = document.getElementById('stageStat2Val')
   const stageStat2Lbl = document.getElementById('stageStat2Lbl')
   const stageCode = document.getElementById('stageCode')
+  const stagePanel = document.getElementById('stagePanel')
 
   let curSysIndex = 0
   let sysTimer = null
@@ -399,7 +308,13 @@ $ oneengine build --target=windows-x64 --release
     const data = systemsData[id]
     if (!data) return
 
-    styleTabs.forEach((b) => b.setAttribute('aria-selected', String(b === btn)))
+    styleTabs.forEach((b) => {
+      const on = b === btn
+      b.setAttribute('aria-selected', String(on))
+      b.tabIndex = on ? 0 : -1
+    })
+    curSysIndex = styleTabs.indexOf(btn)
+    if (stagePanel) stagePanel.setAttribute('aria-labelledby', btn.id)
     if (stageSection) stageSection.style.setProperty('--style-accent', data.color)
 
     if (stageTitle) stageTitle.textContent = data.title
@@ -419,6 +334,23 @@ $ oneengine build --target=windows-x64 --release
     })
   })
 
+  // Keyboard: Left/Right/Home/End move between tabs (automatic activation)
+  document.querySelector('.style-picker')?.addEventListener('keydown', (e) => {
+    const i = styleTabs.indexOf(document.activeElement)
+    if (i < 0) return
+    const last = styleTabs.length - 1
+    let next = -1
+    if (e.key === 'ArrowRight') next = i === last ? 0 : i + 1
+    else if (e.key === 'ArrowLeft') next = i === 0 ? last : i - 1
+    else if (e.key === 'Home') next = 0
+    else if (e.key === 'End') next = last
+    if (next < 0) return
+    e.preventDefault()
+    clearInterval(sysTimer)
+    styleTabs[next].focus()
+    switchSystem(styleTabs[next].dataset.id, styleTabs[next])
+  })
+
   const autoSwitch = () => {
     clearInterval(sysTimer)
     if (!reduced) {
@@ -432,6 +364,11 @@ $ oneengine build --target=windows-x64 --release
 
   stageSection?.addEventListener('pointerenter', () => clearInterval(sysTimer))
   stageSection?.addEventListener('pointerleave', autoSwitch)
+  // Keyboard users: stop auto-rotation while focus is inside the section
+  stageSection?.addEventListener('focusin', () => clearInterval(sysTimer))
+  stageSection?.addEventListener('focusout', (e) => {
+    if (!stageSection.contains(e.relatedTarget)) autoSwitch()
+  })
   autoSwitch()
 
   // ---------------------------------------------------------------- Engine Tuner / Telemetry Bars
@@ -450,56 +387,53 @@ $ oneengine build --target=windows-x64 --release
     })
   }
 
-  document.querySelectorAll('.presets button').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.presets button').forEach((b) => b.setAttribute('aria-checked', 'false'))
-      btn.setAttribute('aria-checked', 'true')
-      const presetKey = btn.dataset.preset
-      if (telemetryPresets[presetKey]) {
-        setTelemetry(telemetryPresets[presetKey])
-      }
+  const presetBtns = [...document.querySelectorAll('.presets button')]
+  const selectPreset = (btn) => {
+    presetBtns.forEach((b) => {
+      const on = b === btn
+      b.setAttribute('aria-checked', String(on))
+      b.tabIndex = on ? 0 : -1
     })
+    const levels = telemetryPresets[btn.dataset.preset]
+    if (levels) setTelemetry(levels)
+  }
+  presetBtns.forEach((btn) => btn.addEventListener('click', () => selectPreset(btn)))
+
+  // Radio-group keyboard behaviour: arrows move and select, Home/End jump
+  document.querySelector('.presets')?.addEventListener('keydown', (e) => {
+    const i = presetBtns.indexOf(document.activeElement)
+    if (i < 0) return
+    const last = presetBtns.length - 1
+    let next = -1
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = i === last ? 0 : i + 1
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = i === 0 ? last : i - 1
+    else if (e.key === 'Home') next = 0
+    else if (e.key === 'End') next = last
+    if (next < 0) return
+    e.preventDefault()
+    presetBtns[next].focus()
+    selectPreset(presetBtns[next])
   })
   setTelemetry(telemetryPresets.competitive)
 
-  // ---------------------------------------------------------------- Terminal typing demo
-  const typedEl = document.querySelector('[data-typed]')
-  if (typedEl) {
-    const commands = [
-      'oneengine new my-game --template=arena',
-      'oneengine build --release --profile=win64',
-      'oneengine replay desync-match-42.rec',
-      'oneengine serve --port=7777 --tick=128Hz'
-    ]
-    let cmdIdx = 0
-    let charIdx = 0
-    let isDeleting = false
-
-    const typeLoop = () => {
-      const current = commands[cmdIdx]
-      if (isDeleting) {
-        typedEl.textContent = current.slice(0, charIdx--)
-      } else {
-        typedEl.textContent = current.slice(0, charIdx++)
-      }
-
-      let speed = isDeleting ? 30 : 65
-      if (!isDeleting && charIdx > current.length) {
-        speed = 2000
-        isDeleting = true
-      } else if (isDeleting && charIdx < 0) {
-        isDeleting = false
-        cmdIdx = (cmdIdx + 1) % commands.length
-        speed = 500
-      }
-      setTimeout(typeLoop, speed)
+  // ---------------------------------------------------------------- Mobile nav
+  const siteNav = document.querySelector('.nav')
+  const navToggle = document.querySelector('.nav-toggle')
+  if (siteNav && navToggle) {
+    const setNavOpen = (open) => {
+      siteNav.classList.toggle('is-open', open)
+      navToggle.setAttribute('aria-expanded', String(open))
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu')
     }
-    typeLoop()
-  }
-
-  // ---------------------------------------------------------------- Author toggle
-  const whoBtn = document.querySelector('[data-who]')
-  if (whoBtn) {
-    whoBtn.addEventListener('click', () => whoBtn.classList.toggle('full'))
+    navToggle.addEventListener('click', () => setNavOpen(!siteNav.classList.contains('is-open')))
+    siteNav.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', () => setNavOpen(false)))
+    document.addEventListener('click', (e) => { if (!siteNav.contains(e.target)) setNavOpen(false) })
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && siteNav.classList.contains('is-open')) {
+        setNavOpen(false)
+        navToggle.focus()
+      }
+    })
+    matchMedia('(min-width: 701px)').addEventListener('change', (e) => { if (e.matches) setNavOpen(false) })
   }
 })()
