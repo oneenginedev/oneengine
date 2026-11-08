@@ -42,13 +42,14 @@ A clean, confident, premium tech look: light bands alternating with one near-bla
 
 | Role | Font | Size | Weight |
 | :--- | :--- | :--- | :--- |
-| Hero headline | Outfit | `clamp(38px, 2.6vw + 30px, 68px)` / 1.05 | 500 |
+| Brand wordmark (hero `h1`, footer close) | Unbounded | `clamp(48px, 14.6cqi, 176px)` / `clamp(44px, 16.2cqi, 236px)`, sized from its container so it never overflows | 600 |
+| Hero promise line | Outfit | `clamp(26px, 1.4vw + 20px, 42px)` / 1.12 | 500 |
 | Script word (one per hero) | Caveat, in `--accent` | 1.16em | 600 |
 | Section heading | Outfit | `clamp(32px, 4vw, 46px)` | 650 |
 | Card title | Outfit | 22–28px (26px on dark cards) | 400–500 |
 | Body | Manrope | 16–17px / 1.6 | 400–700 |
 | Eyebrow | Manrope | 12px uppercase, 0.16em tracking | 600 |
-| Logo wordmark | Unbounded | 16px | 600 |
+| Nav logo | Unbounded | 16px | 600 |
 | Terminal, runtime bar, inline code | JetBrains Mono | 11–14px | 400–600 |
 
 All from Google Fonts with `display=swap`. Headings use `text-wrap: balance`, body text `text-wrap: pretty`.
@@ -80,7 +81,7 @@ All from Google Fonts with `display=swap`. Headings use `text-wrap: balance`, bo
 ## 3. Page structure (`index.html`)
 
 1. **Floating nav.** White glass pill 16px from the top: logo, Systems / Games / Services / Store / FAQ, and a black "Download" pill with a white round chip holding an orange arrow. Over the dark band (`data-nav-dark`) it turns into dark glass and the button turns white. The link for the section on screen gets `aria-current`.
-2. **Hero.** Silk shapes and faint vertical hairlines behind centred content: eyebrow, three-line headline ending in *zero bloat* in Caveat, one paragraph, Download (primary) + View on GitHub (outline), then the laptop playing the gameplay capture with the fire overlay and the pause button.
+2. **Hero.** Silk shapes and faint vertical hairlines behind centred content: eyebrow, the brand name **OneEngine** as a giant wordmark (the page's `h1`), the three-line promise ending in *zero bloat* in Caveat, one paragraph, Download (primary) + View on GitHub (outline), then the laptop playing the gameplay capture with the fire overlay and the pause button.
 3. **Marquee.** The engine's systems plus LuaJIT and Direct3D 12, separated by orange rings.
 4. **Architecture** (`#systems`, dark). Heading, paragraph and a "Learn more" pill; a bento grid of the six systems (orange icon tiles), a terminal card running the `oneengine build --server` example from the FAQ, and a live commits card.
 5. **Get OneEngine** (`#download`). The orange banner with the Windows download and the live release line, a code-drawn illustration of stacked engine windows, then the Linux/macOS card and the philosophy quote card.
@@ -88,7 +89,7 @@ All from Google Fonts with `display=swap`. Headings use `text-wrap: balance`, bo
 7. **Services** (`#services`). Two white cards with orange icon tiles.
 8. **FAQ** (`#faq`). Heading on the left, rounded accordion rows on the right.
 9. **Closing call to action.** "Built for developers who actually ship." with the primary Download button.
-10. **Footer.** Brand, GitHub icon, Product / Project / Help & contact columns, copyright row.
+10. **Footer.** Brand, GitHub icon, Product / Project / Help & contact columns, copyright row, then the name set across the full container width (`.foot-word`, decorative, `aria-hidden`).
 11. **Floating button.** Orange circle bottom-right that opens GitHub Issues.
 
 ## 4. Components
