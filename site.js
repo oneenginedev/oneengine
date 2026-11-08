@@ -376,4 +376,105 @@
 
     loadReleases().then(render).catch(() => render(null))
   }
+
+  // ---------------------------------------------------------------- Reveal on scroll
+  // Blocks marked data-reveal fade and rise into place once. They are only hidden after this
+  // runs (html.js-reveal), so the page never loses content without script.
+  const revealEls = document.querySelectorAll('[data-reveal]')
+  if (revealEls.length && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js-reveal')
+    const revealObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue
+        entry.target.classList.add('is-in')
+        revealObserver.unobserve(entry.target)
+      }
+    }, { rootMargin: '0px 0px -8% 0px' })
+    revealEls.forEach((el) => revealObserver.observe(el))
+  }
+
+  // ---------------------------------------------------------------- Nav over dark bands
+  // While a dark band passes under the floating nav, the pill switches to dark glass.
+  const navBar = document.querySelector('.nav')
+  const darkBands = [...document.querySelectorAll('[data-nav-dark]')]
+  if (navBar && darkBands.length) {
+    const checkNavTone = () => {
+      const r = navBar.getBoundingClientRect()
+      const y = r.top + r.height / 2
+      const over = darkBands.some((band) => {
+        const b = band.getBoundingClientRect()
+        return b.top <= y && b.bottom >= y
+      })
+      navBar.classList.toggle('nav--dark', over)
+    }
+    let toneQueued = false
+    addEventListener('scroll', () => {
+      if (toneQueued) return
+      toneQueued = true
+      requestAnimationFrame(() => {
+        toneQueued = false
+        checkNavTone()
+      })
+    }, { passive: true })
+    addEventListener('resize', checkNavTone)
+    checkNavTone()
+  }
+
+  // ---------------------------------------------------------------- Live GitHub activity card
+  // Real data only: commits to the repository over the last 12 weeks, one bar per week.
+  const ghCount = document.querySelector('[data-gh-count]')
+  if (ghCount) {
+    const WEEKS = 12
+    const WEEK_MS = 7 * 24 * 60 * 60 * 1000
+    const ghBars = [...document.querySelectorAll('[data-gh-bars] li')]
+    const ghLive = document.querySelector('[data-gh-live]')
+    const ghNote = document.querySelector('[data-gh-note]')
+    const since = new Date(Date.now() - WEEKS * WEEK_MS)
+
+    const loadCommitDates = async () => {
+      const key = 'oe-commits'
+      try {
+        const cached = JSON.parse(sessionStorage.getItem(key))
+        if (cached && Date.now() - cached.t < 10 * 60 * 1000) return cached.data
+      } catch {}
+      const res = await fetch(`https://api.github.com/repos/${REPO}/commits?since=${since.toISOString()}&per_page=100`, {
+        headers: { Accept: 'application/vnd.github+json' }
+      })
+      if (!res.ok) throw new Error(`GitHub API ${res.status}`)
+      const data = (await res.json()).map((c) => c.commit.author.date)
+      try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), data })) } catch {}
+      return data
+    }
+
+    const countUp = (to, suffix) => {
+      if (reduced) { ghCount.textContent = `${to}${suffix}`; return }
+      const start = performance.now()
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / 1200)
+        ghCount.textContent = `${Math.round(to * (1 - Math.pow(1 - t, 3)))}${suffix}`
+        if (t < 1) requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    }
+
+    loadCommitDates().then((dates) => {
+      const perWeek = new Array(WEEKS).fill(0)
+      for (const d of dates) {
+        const age = Math.floor((Date.now() - new Date(d).getTime()) / WEEK_MS)
+        if (age >= 0 && age < WEEKS) perWeek[WEEKS - 1 - age]++ // oldest week first
+      }
+      const peak = Math.max(1, ...perWeek)
+      ghBars.forEach((bar, i) => {
+        const n = perWeek[i] || 0
+        bar.style.setProperty('--h', n ? `${Math.max(12, Math.round((n / peak) * 100))}%` : '4px')
+        bar.classList.toggle('has-commits', n > 0)
+        bar.title = `${n} commit${n === 1 ? '' : 's'}`
+      })
+      countUp(dates.length, dates.length >= 100 ? '+' : '')
+      if (ghLive) ghLive.hidden = false
+    }).catch(() => {
+      // Leave the dash: never show a number that was not fetched
+      if (ghNote) ghNote.prepend('Could not reach GitHub right now. ')
+    })
+  }
 })()

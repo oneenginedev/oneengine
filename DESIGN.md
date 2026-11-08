@@ -1,14 +1,15 @@
 # OneEngine design system
 
-This document describes the site as it is built today. The source of truth for tokens is the `:root` block at the top of `style.css`; if the two disagree, fix this file. It covers two surfaces: the marketing site (`index.html`, `download.html`, `changelog.html`, `404.html`) and the store (`store/`).
+This document describes the site as it is built today. The source of truth for tokens is the `:root` block at the top of `style.css`; if the two disagree, fix this file. It covers the marketing site (`index.html`, `download.html`, `changelog.html`, `404.html`). The store (`store/`) is a prebuilt app and keeps its own styling (see section 8).
 
-## 1. Principles
+## 1. Direction
 
-1. **Say what it is in five seconds.** The hero answers what OneEngine is (wordmark + lead + the Windows line) and how to get it (one primary button). The architecture cards right below say why it is fast.
-2. **One primary action per view.** "Download for Windows" is the only solid button in the hero and the nav. "View on GitHub" is the outlined secondary. Everything else is a text link.
-3. **No mock data on the site.** The marketing pages have no unmeasured engine figures, demo benchmarks, ratings or prices. Versions, sizes and dates come live from GitHub Releases, never from hand-written copy. (The prebuilt store still contains sample data and labels it.)
-4. **Light paper with dark engine panels.** Pages sit on a pale paper background. Content that represents the engine itself (architecture band, philosophy card, laptop screen) uses near-black panels.
-5. **Motion is optional.** Everything that loops can be paused with a visible control, pauses off screen, and stops entirely for `prefers-reduced-motion`.
+A clean, confident, premium tech look: light bands alternating with one near-black band, one strong orange accent, big headlines, generous whitespace, soft glass, and fully rounded shapes. Motion is subtle and always optional.
+
+1. **Say what it is in five seconds.** The hero headline is the product promise, the line under it says the platform and price, and two buttons say what to do.
+2. **One primary action.** "Download for Windows" is the solid orange button. "View on GitHub" is the outlined secondary. Everything else is a dark or light pill, or a text link.
+3. **No mock data.** No unmeasured figures, benchmarks, ratings or prices. The only numbers on the page come live from GitHub: the commit count and the latest release.
+4. **Motion is optional.** Every loop pauses from the hero's pause button, off-screen videos pause, and `prefers-reduced-motion` turns travel off.
 
 ## 2. Tokens
 
@@ -16,133 +17,120 @@ This document describes the site as it is built today. The source of truth for t
 
 | Token | Value | Role |
 | :--- | :--- | :--- |
-| `--paper` | `#f6f6f9` | Page background |
-| `--paper-2` | `#ececf2` | Hover fills, inset areas, quiet cards |
-| `--card` | `#ffffff` | Cards, outlined buttons |
-| `--ink` | `#0e0c1d` | Headings, primary text, primary button |
-| `--ink-2` | `#4b4960` | Body copy, nav links |
-| `--ink-3` | `#67657c` | Metadata, hints, labels (was `#807e93`, which failed AA) |
-| `--line` | `#e1e0ea` | Borders and dividers |
-| `--violet` | `#5b3df5` | Brand accent, links, focus ring, text selection, caret and form accents |
-| `--cyan` | `#2fd3e6` | Secondary accent (brand mark, system card rules) |
-| `--style-accent` | `#7c5cfa` | Glow behind the architecture band |
-| `--dark` | `#0c0b14` | Architecture band, philosophy card |
-| `--dark-2` | `#141320` | System cards inside the band |
-| `--on-dark` | `#f4f2fb` | Primary text on dark |
-| `--on-dark-2` | `#b9b6c9` | Body text on dark |
-| `--on-dark-3` | `#a19eb3` | Labels and captions on dark |
-| `--violet-on-dark` | `#b9a9ff` | Badges, text selection and the focus ring on dark panels |
+| `--bg` | `#fdfdfd` | Page background, footer |
+| `--surface` | `#ffffff` | Cards, marquee strip |
+| `--ink` | `#0c0a09` | Text, dark buttons |
+| `--muted` | `#6d6b66` | Secondary text (5.2:1) |
+| `--muted-2` | `#858585` | Grey second line of big headings (3.7:1, large text only) |
+| `--line` | `rgba(12,10,9,0.08)` | 1px borders |
+| `--tint` | `#f4f3f1` | Tags, inline code |
+| `--accent` | `#ff4700` | Chips, icons, glows, borders, focus ring, script word |
+| `--accent-hot` | `#ff5200` | Floating button hover, banner gradient |
+| `--accent-soft` | `#ff9a3c` | Light end of the banner gradient |
+| `--accent-fill` | `#d63a00` | Filled orange buttons with white text (4.7:1) |
+| `--accent-fill-hover` | `#c23400` | Their hover |
+| `--accent-text` | `#c93800` | Orange text on light (5.1:1) |
+| `--accent-wash` | `#fff1ea` | Light icon tiles, FAQ markers, outline-button hover |
+| `--dark` | `#0a0a0a` | Architecture band, quote card |
+| `--dark-card` / `--dark-card-2` | `#111111` / `#282828` | Terminal and stat cards / nav over dark |
+| `--dark-line` | `rgba(255,255,255,0.1)` | Borders on dark |
+| `--on-dark` / `--on-dark-2` | `#ffffff` / `rgba(255,255,255,0.7)` | Text on dark |
 
-Each system card sets `--sys` for the coloured rule on its top edge: `#7c5cfa`, `#2fd3e6`, `#ff7a2f`, `#3fe3a0`, `#e2435a` and `#8a6cff`. Nav link icons use darker variants (`#1f9fc4`, `#e0661c`, `#1a9e6c`, `#d4344c`) so they reach 3:1 on white.
+**Why two oranges.** White text on the brand orange `#ff4700` is only 3.4:1, below AA for button text. Text-bearing fills use `--accent-fill` (4.7:1); the bright orange stays for everything without text on it. The banner gradient starts deep (`#c23400`) where its text sits and only turns bright on the illustration side.
 
-### Contrast (WCAG 2.2 AA, checked by calculation)
-
-| Pair | Ratio |
-| :--- | :--- |
-| `--ink-2` on `--paper` | 8.0:1 |
-| `--ink-3` on `--paper` / `--paper-2` | 5.2:1 / 4.8:1 |
-| `--violet` on `--paper` | 5.7:1 |
-| `--on-dark-2` on `--dark-2` | 9.0:1 |
-| `--violet-on-dark` on `--dark` | 9.5:1 |
-
-### Layout and spacing
-
-| Token | Value | Used for |
-| :--- | :--- | :--- |
-| `--page-max` | `1240px` | Content width of every section, the nav and the footer |
-| `--gutter` | `clamp(16px, 5vw, 72px)` | Minimum side padding |
-| `--section-y` | `clamp(72px, 9vw, 128px)` | Vertical padding of every section |
-| `--head-gap` | `clamp(32px, 4vw, 48px)` | Space between a section heading block and its content |
-
-Sections pad themselves with `max(var(--gutter), calc((100% - var(--page-max)) / 2))`, so content lines up with the nav at every width. The FAQ uses a narrower 780px measure. Sections are separated by space, not divider lines. Body copy is 16px or larger; nothing meant to be read is under 13px except the runtime window's title bar.
-
-### Shape and depth
-
-| Token | Value | Used for |
-| :--- | :--- | :--- |
-| `--radius` | `26px` | Cards and panels |
-| `--radius-lg` | `40px` | Systems band (28px on phones) |
-| | `22px` / `18px` | System cards / download steps |
-| | `999px` | Buttons, nav, presets, pills |
-
-Shadows are soft, offset downward and tinted with the ink colour, for example `0 20px 45px -16px rgba(14, 12, 29, 0.14)`.
-
-### Motion
-
-- Easing: `--ease: cubic-bezier(0.22, 1, 0.36, 1)`.
-- Hover and press transitions: 140–220ms, all on `--ease`. Every pressable control (buttons, the nav icon and toggle, the video and hero pause buttons) scales to 0.97 while pressed.
-- The hero pause button pauses every hero loop: the video, the fire canvas, and (through `html.motion-paused`) the logo ping and the capture dot.
-- The phone menu opens from the toggle's corner (`transform-origin: top right`, scale 0.96 to 1 plus a fade, 180ms, via `@starting-style`) and closes instantly.
-- The hero mark's dot enters from `scale(0.8)` with a fade, never from `scale(0)`.
-- Entrance (`rise`): 900ms, staggered by 120ms.
-- `prefers-reduced-motion`: all animations and transitions collapse to 0.01ms, loops stop, videos start paused, the fire canvas draws one static frame and Lenis smooth scrolling stays off.
-- Smooth scrolling: [Lenis](https://github.com/darkroomengineering/lenis) 1.1.20 (`lerp: 0.1`) on the home, download and changelog pages. In-page links glide to their target 90px below the top so they clear the fixed nav; the skip link also moves focus to `#main`. Lenis is not started for reduced-motion visitors, and if its script fails to load the site falls back to native scrolling.
-- Never use `transition: all`.
-
-## 3. Typography
+### Type
 
 | Role | Font | Size | Weight |
 | :--- | :--- | :--- | :--- |
-| Body | Figtree | 17px / 1.55 | 400–600 |
-| Heading 2 | Figtree | `clamp(34px, 4.6vw, 56px)` | 750 |
-| Heading 3 | Figtree | 21px | 700 |
-| Wordmark, brand, footer brand | Unbounded | 16px and up | 500–700 |
-| Runtime window bar | JetBrains Mono | 11px | 400–600 |
+| Hero headline | Outfit | `clamp(38px, 2.6vw + 30px, 68px)` / 1.05 | 500 |
+| Script word (one per hero) | Caveat, in `--accent` | 1.16em | 600 |
+| Section heading | Outfit | `clamp(32px, 4vw, 46px)` | 650 |
+| Card title | Outfit | 22–28px (26px on dark cards) | 400–500 |
+| Body | Manrope | 16–17px / 1.6 | 400–700 |
+| Eyebrow | Manrope | 12px uppercase, 0.16em tracking | 600 |
+| Logo wordmark | Unbounded | 16px | 600 |
+| Terminal, runtime bar, inline code | JetBrains Mono | 11–14px | 400–600 |
 
-Headings use `letter-spacing: -0.03em`, `line-height: 1.05` and `text-wrap: balance`; body text uses `text-wrap: pretty`. Headings carry their own weight: no eyebrow or kicker labels above them.
+All from Google Fonts with `display=swap`. Headings use `text-wrap: balance`, body text `text-wrap: pretty`.
 
-## 4. Page structure (`index.html`)
+### Shape, depth and layout
 
-1. **Hero.** Wordmark (h1), lead, Download (primary) + View on GitHub (secondary), one meta line, and the laptop with a gameplay loop and a pause button.
-2. **Architecture** (`#systems`, dark band). An unboxed list of six systems (ECS Core, Rollback Netcode, Hot Reload, In-Situ Editor, Deterministic Replays, Single-Binary Builds): each is a short bar in its `--sys` colour, a heading and one sentence. Three columns, two on tablets, one on phones.
-3. **Built with OneEngine** (`#features`). Railbound video with Play/Pause and Mute; beside it a card that hugs its content: genre tags, description and the store button. The section heading names the game, so the card does not repeat it.
-4. **Services** (`#services`). Two cards with text-link actions (no competing solid buttons).
-5. **Get started** (`#download`). Windows card, Linux/macOS card and the philosophy quote card (no badge) in one grid.
-6. **FAQ** (`#faq`).
-7. **Footer.** On `--paper-2` (a tone step, not a rule). About, Product, Project and Help & contact columns, then the name set full width in Unbounded (`.foot-word`, sized with `cqi` so it spans the footer at every width; decorative, `aria-hidden`).
+| Token | Value | Used for |
+| :--- | :--- | :--- |
+| `--r-pill` | `9999px` | Nav, buttons, tags, badges |
+| `--r-xl` | `32px` | Promo banner |
+| `--r-lg` | `24px` | Cards |
+| `--r-md` / `--r-sm` | `16px` / `12px` | FAQ rows, steps / button chips |
+| `--shadow-soft` | `0 24px 60px -28px rgba(12,10,9,.22)` | Hovered cards, video card |
+| `--page-max` | `1240px` | Container (`.wrap`) |
+| `--gutter` | `clamp(16px, 4vw, 40px)` | Side padding |
+| `--section-y` | `clamp(56px, 8vw, 110px)` | Section padding |
 
-`download.html` reads the latest GitHub release and shows its file, size and date, or "No public build yet" when there is none. `changelog.html` lists every release from the GitHub API. Both have static fallbacks without JavaScript.
+### Motion
 
-## 5. Components
+- Easing `--ease: cubic-bezier(0.22, 1, 0.36, 1)`; `--ease-in-out` for slow drifts.
+- Hero: eyebrow, the three headline lines (80ms stagger), paragraph and buttons rise 24px and fade in; the laptop tilts in.
+- Reveal on scroll: blocks with `data-reveal` fade and rise 24px once (700ms, optional `--d` delay). They are only hidden after `site.js` adds `html.js-reveal`, and any block holding keyboard focus is always shown.
+- Loops: hero silk drift, marquee (48s), meteors in the dark band, banner circles, terminal caret, live dots. All pause with `html.motion-paused` (set by the hero pause button); the marquee also pauses on hover and focus.
+- Buttons: chip nudges 3px right on hover, the button scales to 0.97 while pressed. Card lifts and chip nudges only run with `(hover: hover) and (pointer: fine)`.
+- FAQ answers open with a 220ms height and fade and close in 140ms where `::details-content` is supported.
+- Smooth scrolling: Lenis 1.1.20 (`lerp: 0.1`) on the home, download and changelog pages.
+- Reduced motion: animations and transitions collapse to 0.01ms, meteors and pings disappear, the marquee becomes a static wrapped list, reveal fades no longer travel.
 
-- **Buttons.** 52px tall (38px for `.btn-small`), pill radius, 650 weight. `.btn-ink` is solid ink with white text. `.btn-line` has a 1.5px `--line` border on `--card`. Pressing scales to 0.97 (not under reduced motion). `.text-link` is violet, weight 600.
-- **Nav.** Full-width white bar (max `--page-max`), fixed 16px from the top, blurred backdrop. Brand left, five section links (Systems, Games, Services, Store, FAQ) centred with tinted icons, GitHub `</>` button and the primary "Download" button right. Icons hide below 1120px. At 700px and below the links move into a menu (`.nav-toggle`) that closes on link click, outside click and Escape. Below 480px the GitHub button hides so Download always stays visible.
-- **Skip link.** First focusable element on every page, jumps to `#main`.
-- **System list.** A `<ul>` of six unboxed items: a 40 × 4px bar in the item's `--sys` colour, a 21–25px heading and a 16.5px sentence. Static: no tabs, no rotation.
-- **Current section.** `site.js` marks the nav link whose section crosses the middle of the screen with `aria-current="true"`, styled as the link's hover tint.
-- **Hero motion toggle.** Round button on the laptop screen that pauses and resumes the video and the fire canvas.
-- **Game card.** Video with Play/Pause and Mute, genre list, description and a "Play in OneEngine Store" button. No ratings, prices or specs.
-- **Service labels.** Sentence case in violet at 14px; no tiny uppercase pills.
-- **FAQ.** Native `<details>` with a `+` marker. Where the browser supports `::details-content` and `interpolate-size`, answers open with a 220ms height and fade and close in 140ms; elsewhere they open instantly.
-- **Changelog releases.** Fade and rise 8px into place via `@starting-style`, staggered 50ms.
-- **Focus.** `2.5px solid var(--violet)`, 3px offset; `--violet-on-dark` inside dark panels.
-- **Browser surfaces.** Text selection, the caret, form accents and the scrollbar use the palette; link underlines sit 0.18em below the text at 1px.
+## 3. Page structure (`index.html`)
 
-## 6. Media
+1. **Floating nav.** White glass pill 16px from the top: logo, Systems / Games / Services / Store / FAQ, and a black "Download" pill with a white round chip holding an orange arrow. Over the dark band (`data-nav-dark`) it turns into dark glass and the button turns white. The link for the section on screen gets `aria-current`.
+2. **Hero.** Silk shapes and faint vertical hairlines behind centred content: eyebrow, three-line headline ending in *zero bloat* in Caveat, one paragraph, Download (primary) + View on GitHub (outline), then the laptop playing the gameplay capture with the fire overlay and the pause button.
+3. **Marquee.** The engine's systems plus LuaJIT and Direct3D 12, separated by orange rings.
+4. **Architecture** (`#systems`, dark). Heading, paragraph and a "Learn more" pill; a bento grid of the six systems (orange icon tiles), a terminal card running the `oneengine build --server` example from the FAQ, and a live commits card.
+5. **Get OneEngine** (`#download`). The orange banner with the Windows download and the live release line, a code-drawn illustration of stacked engine windows, then the Linux/macOS card and the philosophy quote card.
+6. **Games** (`#features`). Two-line heading (game name in ink, "Built with OneEngine." in grey), a dark "Open the store" pill, then the Railbound video and info card.
+7. **Services** (`#services`). Two white cards with orange icon tiles.
+8. **FAQ** (`#faq`). Heading on the left, rounded accordion rows on the right.
+9. **Closing call to action.** "Built for developers who actually ship." with the primary Download button.
+10. **Footer.** Brand, GitHub icon, Product / Project / Help & contact columns, copyright row.
+11. **Floating button.** Orange circle bottom-right that opens GitHub Issues.
 
-- Videos ship as WebM (VP9) and MP4 (H.264) at 1280px wide, roughly 2 MB each. Both pause when off screen and start paused for reduced-motion visitors. The game video uses `preload="none"`.
-- Posters are WebP. The social image is `og-image.jpg` (1200 × 630).
+## 4. Components
 
-## 7. Store (`store/`)
+- **Buttons (arrow-chip pattern).** `.btn` plus one of `.btn-primary` (orange fill, white chip), `.btn-outline` (orange border, orange chip), `.btn-dark` (ink fill, white chip), `.btn-light` (white fill, orange chip), `.btn-ghost-dark` (for dark bands). The chip is `.btn-chip` (12px-radius square) or `.btn-chip.round`. `.btn-small` for the nav. Minimum height 46–52px.
+- **Bento cards.** Translucent dark glass with a 1px light border and 24px radius; hover lifts 4px and the border glows orange.
+- **Live commits card.** `site.js` fetches commits from the last 12 weeks (`/repos/oneenginedev/oneengine/commits?since=…`), counts up the total and sets one bar per week. If GitHub cannot be reached it keeps the dash and says so; it never shows an invented number.
+- **Terminal card.** macOS-style window; the commands come from the FAQ.
+- **Focus.** `2.5px solid var(--accent)`, 3px offset, on every interactive element.
+- **Touch targets.** 44px minimum for buttons, nav links, the logo, video controls and FAQ rows.
 
-The store is a built single-page app (Vite output with Tailwind classes). Only the build output is in this repo, so it is not redesigned here.
+## 5. Media
 
-- **Shared with the site:** the violet accent `#7c5cfa`, JetBrains Mono for numbers, and a "OneEngine Site" pill that links back.
-- **Different on purpose:** a dark app shell (`#07090C`) with Inter for UI text.
-- A fixed "Sample data" note sits next to the back pill (in `store/index.html`, outside the bundle).
+- Videos ship as WebM (VP9) and MP4 (H.264) at 1280px wide, roughly 2 MB each, and pause when off screen. The hero poster is preloaded.
+- The banner illustration is inline SVG drawn for this site. There are no stock or reference images.
 
-## 8. Conventions
+## 6. Contrast (WCAG 2.2 AA, checked by calculation)
 
-1. Keep gradients to the brand mark and the accent glow. No gradient text.
-2. Use `transform` and `opacity` for motion, and always provide a reduced-motion path and a visible pause for anything that loops longer than 5 seconds.
-3. Every interactive element needs a visible `:focus-visible` state and a keyboard path.
-4. Don't add figures (benchmarks, sizes, player counts, ratings, prices) unless they are measured and sourced.
-5. Don't hand-write versions, file sizes or release dates; `site.js` fills `[data-release-version]`, `[data-release-title]`, `[data-release-status]` and `[data-release-link]` from GitHub.
-6. New sections use an h2 with an `id` and `aria-labelledby` on the `<section>`. No eyebrow labels.
-7. Hover effects that move or lift an element sit inside `@media (hover: hover) and (pointer: fine)` so taps on touch screens don't leave them stuck.
+| Pair | Ratio |
+| :--- | :--- |
+| White on `--accent-fill` | 4.7:1 |
+| `--accent-text` on `--bg` | 5.1:1 |
+| `--muted` on `--bg` | 5.2:1 |
+| `--muted-2` on white (headings only) | 3.7:1 |
+| `--on-dark-2` on `--dark` | 9.4:1 |
+| `--accent` focus ring on `--bg` / `--dark` | 3.4:1 / 5.8:1 |
+
+## 7. Conventions
+
+1. Define new colours, radii and spacing as tokens first; never hard-code them in components.
+2. Don't add figures (benchmarks, sizes, player counts, ratings, prices) unless they are measured and sourced.
+3. Don't hand-write versions, file sizes or release dates; `site.js` fills `[data-release-*]` from GitHub.
+4. New sections: `<section>` with `aria-labelledby`, an `h2` with an `id`, content inside `.wrap`, and `data-reveal` on blocks that should fade in.
+5. Anything that loops gets a selector in the `html.motion-paused` list and a reduced-motion path.
+6. Hover effects that move things go inside `@media (hover: hover) and (pointer: fine)`.
+
+## 8. Store (`store/`)
+
+The store is a built single-page app (Vite output with Tailwind classes) without its source in this repo. It still uses the previous violet accent (`#7c5cfa`) on a dark shell and was not restyled. A fixed "Sample data" note sits next to its "OneEngine Site" back pill.
 
 ## 9. Known gaps
 
-- No docs page exists yet; the FAQ and GitHub are the only help.
-- The store body is `select-none overflow-hidden`, which blocks text selection, and the store has not been audited for contrast or keyboard use.
+- The store does not match the new orange accent.
+- Only one game (Railbound) has media, so the brief's scrolling projects row is a single showcase instead.
 - Contrast was checked by calculation for the token pairs above, not with an automated audit of every element.

@@ -23,12 +23,12 @@
     <meta name="twitter:description" content="The high-performance game engine built for speed, simplicity, and zero bloat. Free for Windows." />
     <meta name="twitter:image" content="https://oneenginedev.github.io/oneengine/og-image.jpg" />
     <meta name="twitter:image:alt" content="OneEngine runtime gameplay preview" />
-    <meta name="theme-color" content="#f6f6f9" />
+    <meta name="theme-color" content="#fdfdfd" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400..800&family=Unbounded:wght@500..700&family=JetBrains+Mono:wght@400..600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@500..700&family=Manrope:wght@400..700&family=Caveat:wght@600&family=Unbounded:wght@600&family=JetBrains+Mono:wght@400..600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -49,183 +49,296 @@
         <span></span><span></span><span></span>
       </button>
       <nav id="siteNav" aria-label="Sections">
-        <a href="#systems" style="--i: #7c5cfa">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>
-          Systems
-        </a>
-        <a href="#features" style="--i: #e0661c">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>
-          Games
-        </a>
-        <a href="#services" style="--i: #1a9e6c">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>
-          Services
-        </a>
-        <a href="store/" style="--i: #d4344c">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 14H5L6 7z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>
-          Store
-        </a>
-        <a href="#faq" style="--i: #5b3df5">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>
-          FAQ
-        </a>
+        <a href="#systems">Systems</a>
+        <a href="#features">Games</a>
+        <a href="#services">Services</a>
+        <a href="store/">Store</a>
+        <a href="#faq">FAQ</a>
       </nav>
-      <a class="nav-icon" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener" aria-label="OneEngine on GitHub (opens in a new tab)" title="OneEngine on GitHub">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+      <a class="btn btn-dark btn-small" href="download.html">
+        Download
+        <span class="btn-chip round"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="btn btn-ink btn-small" href="download.html">Download</a>
     </header>
 
     <main id="main" tabindex="-1">
-      <!-- Hero: what it is, why it is fast, how to get it -->
+      <!-- Hero -->
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <div class="hero-mark" aria-hidden="true">
-            <span class="ping"></span>
-            <span class="ping"></span>
-            <svg viewBox="0 0 1024 1024">
-              <defs>
-                <linearGradient id="ink" x1="160" y1="900" x2="900" y2="120" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="#5b3df5" />
-                  <stop offset="100%" stop-color="#2fd3e6" />
-                </linearGradient>
-              </defs>
-              <circle class="draw-shape" cx="512" cy="512" r="320" />
-              <circle class="core-dot" cx="512" cy="512" r="110" />
-            </svg>
-          </div>
-          <h1 class="wordmark" id="hero-title">OneEngine</h1>
-          <p class="lead">The high-performance game engine built for speed, simplicity, and zero bloat.</p>
-          <div class="cta">
-            <a class="btn btn-ink" href="download.html">
-              <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-                <path d="M3 5.5 10 4.5v7H3zm0 13 7 1v-7H3zm8-14.1L21 3v8.5H11zm0 15.2L21 21v-8.5H11z"/>
-              </svg>
-              Download for Windows
-            </a>
-            <a class="btn btn-line" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">
-              <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
-              View on GitHub
-              <span class="sr-only">(opens in a new tab)</span>
-            </a>
-          </div>
-          <p class="meta">Free and open source for Windows 10 and 11. Single executable, zero dependencies.</p>
+        <div class="hero-bg" aria-hidden="true">
+          <span class="silk silk-1"></span>
+          <span class="silk silk-2"></span>
+          <span class="silk silk-3"></span>
         </div>
+        <div class="wrap hero-copy">
+          <p class="eyebrow">OneEngine · for Windows 10 &amp; 11</p>
+          <h1 id="hero-title">
+            <span class="line">The high-performance</span>
+            <span class="line">game engine built for speed,</span>
+            <span class="line">simplicity, and <em class="script">zero bloat</em>.</span>
+          </h1>
+          <p class="lead">Free and open source for Windows 10 and 11. Single executable, zero dependencies.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="download.html">
+              Download for Windows
+              <span class="btn-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+            <a class="btn btn-outline" href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">
+              View on GitHub<span class="sr-only"> (opens in a new tab)</span>
+              <span class="btn-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </a>
+          </div>
 
-        <figure class="laptop">
-          <div class="lid">
-            <div class="engine-screen">
-              <div class="engine-bar" aria-hidden="true">
-                <div class="dots"><span></span><span></span><span></span></div>
-                <div>OneEngine Runtime</div>
-                <div></div>
-              </div>
-              <div class="engine-canvas-wrap">
-                <video id="heroVideo" class="screen-bg" poster="gameplay-frame.webp" loop muted playsinline preload="metadata" aria-hidden="true">
-                  <source src="gameplay-preview-1280.webm" type="video/webm" />
-                  <source src="gameplay-preview-1280.mp4" type="video/mp4" />
-                </video>
-                <div class="live-gameplay-pill" aria-hidden="true">
-                  <span class="live-dot"></span> Gameplay capture
+          <figure class="laptop">
+            <div class="lid">
+              <div class="engine-screen">
+                <div class="engine-bar" aria-hidden="true">
+                  <div class="dots"><span></span><span></span><span></span></div>
+                  <div>OneEngine Runtime</div>
+                  <div></div>
                 </div>
-                <canvas id="fireCanvas" aria-hidden="true"></canvas>
-                <button type="button" class="motion-toggle" id="heroMotionToggle" aria-label="Pause background animation">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                </button>
+                <div class="engine-canvas-wrap">
+                  <video id="heroVideo" class="screen-bg" poster="gameplay-frame.webp" loop muted playsinline preload="metadata" aria-hidden="true">
+                    <source src="gameplay-preview-1280.webm" type="video/webm" />
+                    <source src="gameplay-preview-1280.mp4" type="video/mp4" />
+                  </video>
+                  <div class="live-gameplay-pill" aria-hidden="true">
+                    <span class="live-dot"></span> Gameplay capture
+                  </div>
+                  <canvas id="fireCanvas" aria-hidden="true"></canvas>
+                  <button type="button" class="motion-toggle" id="heroMotionToggle" aria-label="Pause background animation">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="deck"></div>
-          <figcaption class="sr-only">Gameplay recording shown inside an illustrative OneEngine runtime window.</figcaption>
-        </figure>
+            <div class="deck"></div>
+            <figcaption class="sr-only">Gameplay recording shown inside an illustrative OneEngine runtime window.</figcaption>
+          </figure>
+        </div>
       </section>
 
-      <!-- Architecture -->
-      <section id="systems" class="styles" aria-labelledby="systems-title">
-        <div class="section-head">
-          <h2 id="systems-title">Every subsystem built for pure performance.</h2>
-          <p>
-            No bloated visual node tangles, no hundred-gigabyte editor installations. OneEngine provides clean, cache-coherent C++ core architectures and instant LuaJIT hot reload.
-          </p>
+      <!-- Marquee: the engine's systems -->
+      <div class="marquee" aria-label="Engine systems">
+        <div class="marquee-track">
+          <ul class="marquee-list">
+            <li>ECS Core</li>
+            <li>Rollback Netcode</li>
+            <li>Hot Reload</li>
+            <li>In-Situ Editor</li>
+            <li>Deterministic Replays</li>
+            <li>Single-Binary Builds</li>
+            <li>LuaJIT</li>
+            <li>Direct3D 12</li>
+          </ul>
+          <ul class="marquee-list" aria-hidden="true">
+            <li>ECS Core</li>
+            <li>Rollback Netcode</li>
+            <li>Hot Reload</li>
+            <li>In-Situ Editor</li>
+            <li>Deterministic Replays</li>
+            <li>Single-Binary Builds</li>
+            <li>LuaJIT</li>
+            <li>Direct3D 12</li>
+          </ul>
         </div>
+      </div>
 
-        <ul class="system-grid">
-          <li class="system-card" style="--sys: #7c5cfa">
-            <h3>ECS Core</h3>
-            <p>Sparse set archetypes arranged for contiguous CPU cache lines, with no garbage collector pauses.</p>
-          </li>
-          <li class="system-card" style="--sys: #2fd3e6">
-            <h3>Rollback Netcode</h3>
-            <p>Client prediction, server-authoritative snapshots and delta compression for fast multiplayer.</p>
-          </li>
-          <li class="system-card" style="--sys: #ff7a2f">
-            <h3>Hot Reload</h3>
-            <p>Change Lua gameplay logic, C++ systems or shaders while the game keeps running.</p>
-          </li>
-          <li class="system-card" style="--sys: #3fe3a0">
-            <h3>In-Situ Editor</h3>
-            <p>Sculpt terrain, tweak collisions and inspect live entities inside the same binary your players launch.</p>
-          </li>
-          <li class="system-card" style="--sys: #e2435a">
-            <h3>Deterministic Replays</h3>
-            <p>Record matches as compact input journals and step through them frame by frame to debug desyncs.</p>
-          </li>
-          <li class="system-card" style="--sys: #8a6cff">
-            <h3>Single-Binary Builds</h3>
-            <p>Package your game as one portable Windows executable with no installer and no runtime dependencies.</p>
-          </li>
-        </ul>
+      <!-- Architecture: dark bento -->
+      <section id="systems" class="systems dark" data-nav-dark aria-labelledby="systems-title">
+        <div class="meteors" aria-hidden="true">
+          <span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span><span class="meteor"></span>
+        </div>
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <div>
+              <p class="eyebrow">Architecture</p>
+              <h2 id="systems-title">Every subsystem built for pure performance.</h2>
+              <p>
+                No bloated visual node tangles, no hundred-gigabyte editor installations. OneEngine provides clean, cache-coherent C++ core architectures and instant LuaJIT hot reload.
+              </p>
+            </div>
+            <a class="btn btn-ghost-dark" href="#faq">
+              Learn more
+              <span class="btn-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+          </div>
+
+          <ul class="bento">
+            <li class="bento-card" data-reveal style="--d: 0ms">
+              <span class="icon-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+              <h3>ECS Core</h3>
+              <p>Sparse set archetypes arranged for contiguous CPU cache lines, with no garbage collector pauses.</p>
+            </li>
+            <li class="bento-card" data-reveal style="--d: 70ms">
+              <span class="icon-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+              <h3>Rollback Netcode</h3>
+              <p>Client prediction, server-authoritative snapshots and delta compression for fast multiplayer.</p>
+            </li>
+            <li class="bento-card bento-terminal" data-reveal style="--d: 140ms">
+              <div class="term-bar" aria-hidden="true"><span></span><span></span><span></span><b>terminal</b></div>
+              <pre class="term-body" aria-label="Example terminal session building a dedicated server"><span class="t-prompt">$</span> oneengine build --server
+<span class="t-ok">✓</span> Compiling in headless mode
+<span class="t-ok">✓</span> Dedicated server binary ready
+<span class="t-prompt">$</span> <span class="term-caret" aria-hidden="true"></span></pre>
+            </li>
+            <li class="bento-card" data-reveal style="--d: 70ms">
+              <span class="icon-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36M21 4v5h-5"/></svg></span>
+              <h3>Hot Reload</h3>
+              <p>Change Lua gameplay logic, C++ systems or shaders while the game keeps running.</p>
+            </li>
+            <li class="bento-card" data-reveal style="--d: 140ms">
+              <span class="icon-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+              <h3>In-Situ Editor</h3>
+              <p>Sculpt terrain, tweak collisions and inspect live entities inside the same binary your players launch.</p>
+            </li>
+            <li class="bento-card" data-reveal style="--d: 70ms">
+              <span class="icon-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/><path d="M12 7v5l3 2"/></svg></span>
+              <h3>Deterministic Replays</h3>
+              <p>Record matches as compact input journals and step through them frame by frame to debug desyncs.</p>
+            </li>
+            <li class="bento-card" data-reveal style="--d: 140ms">
+              <span class="icon-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></span>
+              <h3>Single-Binary Builds</h3>
+              <p>Package your game as one portable Windows executable with no installer and no runtime dependencies.</p>
+            </li>
+            <li class="bento-card bento-stat" data-reveal style="--d: 210ms">
+              <div class="stat-top">
+                <span class="stat-label">Commits · last 12 weeks</span>
+                <span class="live-badge" data-gh-live hidden>Live</span>
+              </div>
+              <div class="stat-row">
+                <p class="stat-value" data-gh-count>—</p>
+                <ol class="stat-bars" data-gh-bars aria-hidden="true">
+                  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+                </ol>
+              </div>
+              <p class="stat-note" data-gh-note>Activity on <a href="https://github.com/oneenginedev/oneengine/commits/main" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Get OneEngine: promo banner -->
+      <section id="download" aria-labelledby="download-title">
+        <div class="wrap">
+          <div class="banner" data-reveal>
+            <div>
+              <p class="eyebrow eyebrow-dot">Free · Apache License 2.0</p>
+              <h2 id="download-title">Get OneEngine.</h2>
+              <p class="banner-sub">Single standalone binary including the runtime, hot reload server, and world editor. No external dependencies required.</p>
+              <p class="banner-meta">Windows 10 / 11 · 64-bit · <span data-release-version>Latest release on GitHub</span></p>
+              <div class="cta">
+                <a class="btn btn-light" href="download.html">
+                  Download for Windows
+                  <span class="btn-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </a>
+                <a class="text-link" href="https://github.com/oneenginedev/oneengine/releases" target="_blank" rel="noopener">All releases<span class="sr-only"> (opens in a new tab)</span></a>
+              </div>
+            </div>
+            <div class="banner-art" aria-hidden="true">
+              <svg viewBox="0 0 380 300">
+                <rect x="70" y="18" width="250" height="160" rx="18" fill="rgba(255,255,255,0.22)"/>
+                <rect x="46" y="56" width="266" height="170" rx="20" fill="rgba(255,255,255,0.4)"/>
+                <g>
+                  <rect x="22" y="96" width="290" height="184" rx="22" fill="#ffffff"/>
+                  <circle cx="46" cy="120" r="5" fill="#ff5f57"/>
+                  <circle cx="62" cy="120" r="5" fill="#febc2e"/>
+                  <circle cx="78" cy="120" r="5" fill="#28c840"/>
+                  <rect x="44" y="144" width="132" height="86" rx="12" fill="#fff1ea"/>
+                  <path d="M100 172v30l24-15z" fill="#ff4700"/>
+                  <rect x="192" y="146" width="98" height="12" rx="6" fill="#ffd2b8"/>
+                  <rect x="192" y="168" width="78" height="12" rx="6" fill="#ffe4d6"/>
+                  <rect x="192" y="190" width="88" height="12" rx="6" fill="#ffe4d6"/>
+                  <rect x="192" y="214" width="56" height="16" rx="8" fill="#ff4700"/>
+                  <rect x="44" y="246" width="246" height="10" rx="5" fill="#f4f3f1"/>
+                </g>
+                <circle class="float" cx="336" cy="70" r="22" fill="rgba(255,255,255,0.55)"/>
+                <circle class="float float-2" cx="18" cy="60" r="12" fill="rgba(255,255,255,0.45)"/>
+                <circle class="float float-3" cx="348" cy="246" r="14" fill="rgba(255,255,255,0.6)"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="after-banner">
+            <article class="plain-card" data-reveal>
+              <h3>Linux &amp; macOS</h3>
+              <p class="muted">In active development</p>
+              <p>Vulkan backend and headless Linux dedicated server builds are currently in testing. Check our GitHub releases for early preview builds.</p>
+              <a class="text-link" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">Follow progress on GitHub<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">→</span></a>
+            </article>
+            <figure class="plain-card quote-card" data-reveal style="--d: 80ms">
+              <blockquote class="manifesto-quote">
+                <p>Modern game engines have become sprawling operating systems. OneEngine is a return to clarity: pure speed, clean code, and zero friction.</p>
+              </blockquote>
+              <ul class="chips" aria-label="Project facts">
+                <li>Open Source (Apache 2.0)</li>
+                <li>Portable C++</li>
+              </ul>
+            </figure>
+          </div>
+          <p class="note">OneEngine is released under the permissive Apache License 2.0. You are completely free to use it for personal, commercial, and open-source games.</p>
+        </div>
       </section>
 
       <!-- Game showcase -->
       <section id="features" class="features" aria-labelledby="features-title">
-        <div class="section-head">
-          <h2 id="features-title">Railbound: Tactical Protocol</h2>
-          <p>A tactical rail-defense game built on OneEngine.</p>
-        </div>
-
-        <div class="game-showcase">
-          <div class="game-video-card">
-            <div class="game-video-wrapper">
-              <video id="gameplayVideo" poster="gameplay-frame.webp" loop muted playsinline preload="none" aria-label="Railbound gameplay preview">
-                <source src="gameplay-preview-1280.webm" type="video/webm" />
-                <source src="gameplay-preview-1280.mp4" type="video/mp4" />
-              </video>
-              <div class="video-control-overlay">
-                <div class="video-ctrls">
-                  <button type="button" class="video-ctrl-btn" id="videoPlayToggle" aria-label="Pause gameplay video">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                    <span>Pause</span>
-                  </button>
-                  <button type="button" class="video-ctrl-btn" id="videoMuteToggle" aria-label="Unmute gameplay video">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-                    <span>Unmute</span>
-                  </button>
-                </div>
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <div>
+              <p class="eyebrow">Games</p>
+              <h2 id="features-title" class="split-title">Railbound: Tactical Protocol <span class="grey">Built with OneEngine.</span></h2>
+            </div>
+            <div class="head-aside">
+              <p>A tactical rail-defense game.</p>
+              <div class="cta">
+                <a class="btn btn-dark" href="store/">
+                  Open the store
+                  <span class="btn-chip round"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </a>
               </div>
             </div>
-            <p class="game-video-caption">
-              Gameplay capture from Railbound: Tactical Protocol.
-            </p>
           </div>
 
-          <div class="game-info-card">
-            <ul class="game-card-meta" aria-label="Genres">
-              <li class="game-tag">Tactical</li>
-              <li class="game-tag">Automation</li>
-              <li class="game-tag">Defense</li>
-              <li class="game-tag">Strategy</li>
-              <li class="game-tag">Sci-fi</li>
-            </ul>
-            <p>
-              Lead an automated rail defense vanguard across hostile industrial zones. Reconfigure track matrices, repel mechanized raiders, and deploy armored rolling artillery to secure planetary resource arteries.
-            </p>
+          <div class="game-showcase">
+            <div class="game-video-card" data-reveal>
+              <div class="game-video-wrapper">
+                <video id="gameplayVideo" poster="gameplay-frame.webp" loop muted playsinline preload="none" aria-label="Railbound gameplay preview">
+                  <source src="gameplay-preview-1280.webm" type="video/webm" />
+                  <source src="gameplay-preview-1280.mp4" type="video/mp4" />
+                </video>
+                <div class="video-control-overlay">
+                  <div class="video-ctrls">
+                    <button type="button" class="video-ctrl-btn" id="videoPlayToggle" aria-label="Pause gameplay video">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                      <span>Pause</span>
+                    </button>
+                    <button type="button" class="video-ctrl-btn" id="videoMuteToggle" aria-label="Unmute gameplay video">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                      <span>Unmute</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <p class="game-video-caption">Gameplay capture from Railbound: Tactical Protocol.</p>
+            </div>
 
-            <div class="showcase-actions">
-              <a class="btn btn-ink" href="store/">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                Play in OneEngine Store
-              </a>
+            <div class="game-info-card" data-reveal style="--d: 80ms">
+              <ul class="game-card-meta" aria-label="Genres">
+                <li class="game-tag">Tactical</li>
+                <li class="game-tag">Automation</li>
+                <li class="game-tag">Defense</li>
+                <li class="game-tag">Strategy</li>
+                <li class="game-tag">Sci-fi</li>
+              </ul>
+              <p>
+                Lead an automated rail defense vanguard across hostile industrial zones. Reconfigure track matrices, repel mechanized raiders, and deploy armored rolling artillery to secure planetary resource arteries.
+              </p>
+              <div class="cta">
+                <a class="btn btn-primary" href="store/">
+                  Play in OneEngine Store
+                  <span class="btn-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -233,180 +346,181 @@
 
       <!-- Services -->
       <section id="services" class="services" aria-labelledby="services-title">
-        <div class="section-head">
-          <h2 id="services-title">Our Services</h2>
-          <p>
-            Powering game creators and gamers alike with premier original game experiences and a high-performance, developer-first digital store.
-          </p>
-        </div>
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <div>
+              <p class="eyebrow">What we do</p>
+              <h2 id="services-title">Our Services</h2>
+              <p>
+                Powering game creators and gamers alike with premier original game experiences and a high-performance, developer-first digital store.
+              </p>
+            </div>
+          </div>
 
-        <div class="services-grid">
-          <article class="service-card">
-            <div class="service-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polygon points="6 3 20 12 6 21 6 3"></polygon>
-              </svg>
-              <span class="service-pill">Game Production &amp; Publishing</span>
-            </div>
-            <h3>Our Games</h3>
-            <p>
-              We engineer and publish cutting-edge titles demonstrating the raw capabilities of OneEngine. From tactical simulators to frantic 2D action, our games deliver uncompromising speed, deterministic physics, and zero stutter.
-            </p>
-            <ul class="service-features">
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Original Titles:</strong> Flagship releases including <em>Railbound: Tactical Protocol</em> and <em>shootPower</em>.</span>
-              </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Rollback Netcode:</strong> Multiplayer architectures with deterministic replay simulation.</span>
-              </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Pure Hardware Utilization:</strong> Direct3D 12 and Vulkan rendering pipelines.</span>
-              </li>
-            </ul>
-            <div class="service-footer">
-              <a class="text-link" href="#features">See Railbound <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+          <div class="services-grid">
+            <article class="service-card" data-reveal>
+              <div class="service-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                </svg>
+                <span class="service-pill">Game Production &amp; Publishing</span>
+              </div>
+              <h3>Our Games</h3>
+              <p>
+                We engineer and publish cutting-edge titles demonstrating the raw capabilities of OneEngine. From tactical simulators to frantic 2D action, our games deliver uncompromising speed, deterministic physics, and zero stutter.
+              </p>
+              <ul class="service-features">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Original Titles:</strong> Flagship releases including <em>Railbound: Tactical Protocol</em> and <em>shootPower</em>.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Rollback Netcode:</strong> Multiplayer architectures with deterministic replay simulation.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Pure Hardware Utilization:</strong> Direct3D 12 and Vulkan rendering pipelines.</span>
+                </li>
+              </ul>
+              <div class="service-footer">
+                <a class="text-link" href="#features">See Railbound <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
 
-          <article class="service-card">
-            <div class="service-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <path d="M16 10a4 4 0 0 1-8 0"></path>
-              </svg>
-              <span class="service-pill">Digital Distribution Platform</span>
-            </div>
-            <h3>OneEngine Store</h3>
-            <p>
-              The OneEngine Store is a minimalist marketplace built for players who want instant gameplay and studios who want fair terms. No heavy background launchers, no DRM degradation, and zero engine royalties.
-            </p>
-            <ul class="service-features">
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Zero-Bloat Single Binaries:</strong> 1-click standalone installs without launcher overhead or telemetry trackers.</span>
-              </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Fair Creator Terms:</strong> 100% royalty-free engine runtime and transparent developer revenue cuts.</span>
-              </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Integrated Cloud &amp; Modding:</strong> Native cloud save synchronization and seamless community mod delivery.</span>
-              </li>
-            </ul>
-            <div class="service-footer">
-              <a class="text-link" href="store/">Open the web store <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
+            <article class="service-card" data-reveal style="--d: 80ms">
+              <div class="service-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
+                <span class="service-pill">Digital Distribution Platform</span>
+              </div>
+              <h3>OneEngine Store</h3>
+              <p>
+                The OneEngine Store is a minimalist marketplace built for players who want instant gameplay and studios who want fair terms. No heavy background launchers, no DRM degradation, and zero engine royalties.
+              </p>
+              <ul class="service-features">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Zero-Bloat Single Binaries:</strong> 1-click standalone installs without launcher overhead or telemetry trackers.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Fair Creator Terms:</strong> 100% royalty-free engine runtime and transparent developer revenue cuts.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Integrated Cloud &amp; Modding:</strong> Native cloud save synchronization and seamless community mod delivery.</span>
+                </li>
+              </ul>
+              <div class="service-footer">
+                <a class="text-link" href="store/">Open the web store <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+          </div>
         </div>
-      </section>
-
-      <!-- Get started: philosophy + download -->
-      <section id="download" class="download" aria-labelledby="download-title">
-        <div class="section-head">
-          <h2 id="download-title">Get OneEngine.</h2>
-          <p>
-            Built for developers who actually ship: indie developers, game jam competitors, and multiplayer studio teams who want total control over every byte and millisecond.
-          </p>
-        </div>
-
-        <div class="dl-grid">
-          <article class="dl-card highlight">
-            <h3>Windows 10 / 11</h3>
-            <p class="muted">64-bit · <span data-release-version>Latest release on GitHub</span></p>
-            <p>Single standalone binary including the runtime, hot reload server, and world editor. No external dependencies required.</p>
-            <div class="cta">
-              <a class="btn btn-ink" href="download.html">Download for Windows</a>
-              <a class="text-link" href="https://github.com/oneenginedev/oneengine/releases" target="_blank" rel="noopener">All releases<span class="sr-only"> (opens in a new tab)</span></a>
-            </div>
-          </article>
-          <article class="dl-card quiet">
-            <h3>Linux &amp; macOS</h3>
-            <p class="muted">In active development</p>
-            <p>Vulkan backend and headless Linux dedicated server builds are currently in testing. Check our GitHub releases for early preview builds.</p>
-            <div class="cta">
-              <a class="text-link" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">Follow progress on GitHub<span class="sr-only"> (opens in a new tab)</span></a>
-            </div>
-          </article>
-          <figure class="maker-card">
-            <blockquote class="manifesto-quote">
-              <p>Modern game engines have become sprawling operating systems. OneEngine is a return to clarity: pure speed, clean code, and zero friction.</p>
-            </blockquote>
-            <ul class="chips small" aria-label="Project facts">
-              <li>Open Source (Apache 2.0)</li>
-              <li>Portable C++</li>
-            </ul>
-          </figure>
-        </div>
-        <p class="note">
-          OneEngine is released under the permissive Apache License 2.0. You are completely free to use it for personal, commercial, and open-source games.
-        </p>
       </section>
 
       <!-- FAQ -->
       <section id="faq" class="faq" aria-labelledby="faq-title">
-        <h2 id="faq-title">Questions</h2>
-        <details>
-          <summary>Is OneEngine completely free to use?</summary>
-          <p>Yes. OneEngine is licensed under the Apache License 2.0. There are no royalties, subscription tiers, or splash screen requirements.</p>
-        </details>
-        <details>
-          <summary>What programming languages are supported?</summary>
-          <p>C++20 is used for engine core systems and performance critical gameplay loops. LuaJIT 2.1 is fully embedded for rapid scripting, game rules, and hot-reloadable prototypes.</p>
-        </details>
-        <details>
-          <summary>Does it include physics and audio out of the box?</summary>
-          <p>Yes. OneEngine includes a fast 2D/3D collision detection pipeline and a low-latency spatial audio mixer built directly into the runtime.</p>
-        </details>
-        <details>
-          <summary>Can I run dedicated multiplayer servers?</summary>
-          <p>Yes. The engine can be compiled in headless mode with <code>oneengine build --server</code>, producing a lightweight dedicated server binary.</p>
-        </details>
-        <details>
-          <summary>Where do I report a bug or ask a question?</summary>
-          <p>Open an issue on <a class="text-link" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">GitHub Issues<span class="sr-only"> (opens in a new tab)</span></a>. Release notes for every build are on the <a class="text-link" href="changelog.html">changelog</a>.</p>
-        </details>
+        <div class="wrap faq-grid">
+          <div data-reveal>
+            <p class="eyebrow">FAQ</p>
+            <h2 id="faq-title">Questions</h2>
+          </div>
+          <div class="faq-list" data-reveal style="--d: 80ms">
+            <details>
+              <summary>Is OneEngine completely free to use?</summary>
+              <p>Yes. OneEngine is licensed under the Apache License 2.0. There are no royalties, subscription tiers, or splash screen requirements.</p>
+            </details>
+            <details>
+              <summary>What programming languages are supported?</summary>
+              <p>C++20 is used for engine core systems and performance critical gameplay loops. LuaJIT 2.1 is fully embedded for rapid scripting, game rules, and hot-reloadable prototypes.</p>
+            </details>
+            <details>
+              <summary>Does it include physics and audio out of the box?</summary>
+              <p>Yes. OneEngine includes a fast 2D/3D collision detection pipeline and a low-latency spatial audio mixer built directly into the runtime.</p>
+            </details>
+            <details>
+              <summary>Can I run dedicated multiplayer servers?</summary>
+              <p>Yes. The engine can be compiled in headless mode with <code>oneengine build --server</code>, producing a lightweight dedicated server binary.</p>
+            </details>
+            <details>
+              <summary>Where do I report a bug or ask a question?</summary>
+              <p>Open an issue on <a class="text-link" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">GitHub Issues<span class="sr-only"> (opens in a new tab)</span></a>. Release notes for every build are on the <a class="text-link" href="changelog.html">changelog</a>.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Closing call to action -->
+      <section class="closing" aria-labelledby="closing-title">
+        <div class="hero-bg" aria-hidden="true">
+          <span class="silk silk-1"></span>
+          <span class="silk silk-2"></span>
+        </div>
+        <div class="wrap" data-reveal>
+          <h2 id="closing-title">Built for developers who actually ship.</h2>
+          <p>Indie developers, game jam competitors, and multiplayer studio teams who want total control over every byte and millisecond.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="download.html">
+              Download for Windows
+              <span class="btn-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </a>
+          </div>
+        </div>
       </section>
     </main>
 
     <footer class="foot">
-      <div class="foot-grid">
-        <div class="foot-about">
-          <div class="foot-brand">
-            <svg class="mark" width="20" height="20" viewBox="0 0 1024 1024" aria-hidden="true">
-              <circle cx="512" cy="512" r="320" fill="none" stroke="currentColor" stroke-width="64" stroke-dasharray="1400 350"/>
-              <circle cx="512" cy="512" r="110" fill="currentColor"/>
-            </svg>
-            <span>OneEngine</span>
+      <div class="wrap">
+        <div class="foot-grid">
+          <div class="foot-about">
+            <div class="foot-brand">
+              <svg class="mark" width="20" height="20" viewBox="0 0 1024 1024" aria-hidden="true">
+                <circle cx="512" cy="512" r="320" fill="none" stroke="currentColor" stroke-width="64" stroke-dasharray="1400 350"/>
+                <circle cx="512" cy="512" r="110" fill="currentColor"/>
+              </svg>
+              <span>OneEngine</span>
+            </div>
+            <p>High-performance game engine architecture for modern Windows platforms.</p>
+            <div class="social">
+              <a href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener" aria-label="OneEngine on GitHub (opens in a new tab)">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              </a>
+            </div>
           </div>
-          <p>High-performance game engine architecture for modern Windows platforms.</p>
+          <nav class="foot-col" aria-labelledby="foot-product">
+            <h2 id="foot-product">Product</h2>
+            <a href="download.html">Download</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="store/">Store</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+          <nav class="foot-col" aria-labelledby="foot-project">
+            <h2 id="foot-project">Project</h2>
+            <a href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/oneenginedev/oneengine/releases" target="_blank" rel="noopener">Releases<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/oneenginedev/oneengine/blob/main/LICENSE" target="_blank" rel="noopener">License<span class="sr-only"> (opens in a new tab)</span></a>
+          </nav>
+          <nav class="foot-col" aria-labelledby="foot-help">
+            <h2 id="foot-help">Help &amp; contact</h2>
+            <a href="https://github.com/oneenginedev/oneengine/issues/new" target="_blank" rel="noopener">Report an issue<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">Ask a question<span class="sr-only"> (opens in a new tab)</span></a>
+          </nav>
         </div>
-        <nav class="foot-col" aria-labelledby="foot-product">
-          <h2 id="foot-product">Product</h2>
-          <a href="download.html">Download</a>
-          <a href="changelog.html">Changelog</a>
-          <a href="store/">Store</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <nav class="foot-col" aria-labelledby="foot-project">
-          <h2 id="foot-project">Project</h2>
-          <a href="https://github.com/oneenginedev/oneengine" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
-          <a href="https://github.com/oneenginedev/oneengine/releases" target="_blank" rel="noopener">Releases<span class="sr-only"> (opens in a new tab)</span></a>
-          <a href="https://github.com/oneenginedev/oneengine/blob/main/LICENSE" target="_blank" rel="noopener">License<span class="sr-only"> (opens in a new tab)</span></a>
-        </nav>
-        <nav class="foot-col" aria-labelledby="foot-help">
-          <h2 id="foot-help">Help &amp; contact</h2>
-          <a href="https://github.com/oneenginedev/oneengine/issues/new" target="_blank" rel="noopener">Report an issue<span class="sr-only"> (opens in a new tab)</span></a>
-          <a href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener">Ask a question<span class="sr-only"> (opens in a new tab)</span></a>
-        </nav>
+        <div class="foot-bottom">
+          <p>© 2026 OneEngine. Released under the Apache License 2.0.</p>
+          <p>Made for Windows 10 and 11.</p>
+        </div>
       </div>
-      <p class="fine">Released under the Apache License 2.0.</p>
-      <p class="foot-word" aria-hidden="true">OneEngine</p>
     </footer>
+
+    <a class="fab" href="https://github.com/oneenginedev/oneengine/issues" target="_blank" rel="noopener" aria-label="Ask a question on GitHub (opens in a new tab)" title="Ask a question">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.7A8 8 0 1 1 21 12z"/></svg>
+    </a>
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" integrity="sha384-eD5ubmuCcvTdCADWuSchJYE7wcj2nzNr0itbrh6w/KJyBiltSZ8w3VFRBSWu5YQ8" crossorigin="anonymous" defer></script>
     <script src="site.js" defer></script>
