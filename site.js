@@ -331,8 +331,8 @@
 
       if (dlStatus && dlLink) {
         if (latest) {
-          const asset = latest.assets.find((a) => /\.(exe|zip|msi)$/i.test(a.name))
-          if (dlTitle) dlTitle.textContent = `Download OneEngine ${latest.tag_name}`
+          const asset = latest.assets.find((a) => /\.exe$/i.test(a.name)) || latest.assets.find((a) => /\.(zip|msi)$/i.test(a.name))
+          if (dlTitle) dlTitle.textContent = `Download OneEngine Store ${latest.tag_name}`
           if (asset) {
             dlStatus.textContent = `${asset.name}, ${fmtSize(asset.size)}, published ${fmtDate(latest.published_at)}.`
             dlLink.href = asset.browser_download_url
@@ -344,7 +344,7 @@
           }
         } else {
           if (dlTitle) dlTitle.textContent = 'No public build yet'
-          dlStatus.textContent = 'OneEngine has not published a release on GitHub yet. Watch the repository to hear when the first build is out.'
+          dlStatus.textContent = 'OneEngine Store has not published a release on GitHub yet. Watch the repository to hear when the first build is out.'
           dlLink.href = REPO_URL
           dlLink.querySelector('span').textContent = 'Watch on GitHub'
         }
