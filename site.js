@@ -315,6 +315,7 @@
     const render = (releases) => {
       // releases === null means the API call failed: keep the static fallback copy
       if (!releases) {
+        if (dlStatus) dlStatus.textContent = 'The latest version could not be looked up right now. Open the GitHub releases page to download it.'
         if (releaseList) {
           releaseList.replaceChildren(el('p', 'release-empty', 'Release notes could not be loaded right now. '))
           const a = el('a', 'text-link', 'See releases on GitHub')
@@ -331,7 +332,7 @@
 
       if (dlStatus && dlLink) {
         if (latest) {
-          const asset = latest.assets.find((a) => /\.exe$/i.test(a.name)) || latest.assets.find((a) => /\.(zip|msi)$/i.test(a.name))
+          const asset = latest.assets.find((a) => a.name.startsWith('OneEngine-Store-Setup') && a.name.toLowerCase().endsWith('.exe')) || latest.assets.find((a) => /\.exe$/i.test(a.name)) || latest.assets.find((a) => /\.(zip|msi)$/i.test(a.name))
           if (dlTitle) dlTitle.textContent = `Download OneEngine Store ${latest.tag_name}`
           if (asset) {
             dlStatus.textContent = `${asset.name}, ${fmtSize(asset.size)}, published ${fmtDate(latest.published_at)}.`
