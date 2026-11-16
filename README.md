@@ -31,7 +31,7 @@ Then open http://localhost:8000. Do not open `index.html` straight from disk: th
 
 ## Structure
 
-- `index.html`: landing page: hero, systems marquee, architecture bento (dark), Get OneEngine banner, Railbound showcase, services, FAQ, closing call to action.
+- `index.html`: landing page in portfolio order: hero, marquee, Games (dark, Railbound key art and gameplay), Services, Engine (dark bento), the OneEngine Store banner, FAQ, closing call to action.
 - `download.html`: shows the latest GitHub release with its file, size and date, or "No public build yet".
 - `changelog.html`: release notes for every GitHub release.
 - `404.html`: not-found page. Its `<base href>` must match the site URL above.
@@ -50,13 +50,14 @@ The only third-party script is [Lenis](https://github.com/darkroomengineering/le
 | :--- | :--- |
 | `gameplay-preview-1280.webm`, `gameplay-preview-1280.mp4` | Videos used by the site |
 | `gameplay-frame.webp` | Video poster |
+| `railbound-keyart.webp` | Railbound key art on the Games band, cropped from `railbound.jpg` (the loading screen) without its tip panel and loading bar |
 | `gameplay-preview.mp4`, `gameplay-frame.jpg` | Originals, not referenced by any page (sources for the videos and `og-image.jpg`) |
 
 ### Files no longer used by any page
 
 These are kept in the repo but nothing references them:
 
-- `railbound.webp`, `railbound.jpg`
+- `railbound.webp` (`railbound.jpg` is kept as the source of the key art crop)
 - `gameplay-preview.mp4`, `gameplay-frame.jpg` (originals, see above)
 - `store/favicon.png`, and the duplicate bundle files in the `store/` root (`core-*.js`, `event-*.js`, `index-*.js`, `index-*.css`, `window-*.js`). The store loads its copies from `store/assets/`.
 
