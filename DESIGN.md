@@ -7,7 +7,7 @@ This document describes the site as it is built today. The source of truth for t
 A clean, confident, premium tech look: light bands alternating with one near-black band, one strong orange accent, big headlines, generous whitespace, soft glass, and fully rounded shapes. Motion is subtle and always optional.
 
 1. **Say what it is in five seconds.** The hero headline is the product promise, the line under it says the platform and price, and two buttons say what to do.
-2. **One primary action.** "Download for Windows" is the solid orange button. "View on GitHub" is the outlined secondary. Everything else is a dark or light pill, or a text link.
+2. **One primary action.** "Download OneEngine Store" is the solid orange button; the download page offers the Store launcher installer. "See our games" is the outlined secondary. Everything else is a dark or light pill, or a text link.
 3. **No mock data.** No unmeasured figures, benchmarks, ratings or prices. The only numbers on the page come live from GitHub: the commit count and the latest release.
 4. **Motion is optional.** Every loop pauses from the hero's pause button, off-screen videos pause, and `prefers-reduced-motion` turns travel off.
 
@@ -80,15 +80,15 @@ All from Google Fonts with `display=swap`. Headings use `text-wrap: balance`, bo
 
 ## 3. Page structure (`index.html`)
 
-1. **Floating nav.** White glass pill 16px from the top: logo, Systems / Games / Services / Store / FAQ, and a black "Download" pill with a white round chip holding an orange arrow. Over the dark band (`data-nav-dark`) it turns into dark glass and the button turns white. The link for the section on screen gets `aria-current`.
-2. **Hero.** Silk shapes and faint vertical hairlines behind centred content: eyebrow, the brand name **OneEngine** as a giant wordmark (the page's `h1`), the three-line promise ending in *zero bloat* in Caveat, one paragraph, Download (primary) + View on GitHub (outline), then the laptop playing the gameplay capture with the fire overlay and the pause button.
-3. **Marquee.** The engine's systems plus LuaJIT and Direct3D 12, separated by orange rings.
-4. **Architecture** (`#systems`, dark). Heading, paragraph and a "Learn more" pill; a bento grid of the six systems (orange icon tiles), a terminal card running the `oneengine build --server` example from the FAQ, and a live commits card.
-5. **Get OneEngine** (`#download`). The orange banner with the Windows download and the live release line, a code-drawn illustration of stacked engine windows, then the Linux/macOS card and the philosophy quote card.
-6. **Games** (`#features`). Two-line heading (game name in ink, "Built with OneEngine." in grey), a dark "Open the store" pill, then the Railbound video and info card.
-7. **Services** (`#services`). Two white cards with orange icon tiles.
+1. **Floating nav.** White glass pill 16px from the top: logo, Games / Services / Engine / Store / FAQ, and a black "Download" pill with a white round chip holding an orange arrow. Over the dark bands (`data-nav-dark`) it turns into dark glass and the button turns white. The link for the section on screen gets `aria-current`.
+2. **Hero.** Silk shapes and faint vertical hairlines behind centred content: eyebrow "Games · Store · Engine", the brand name **OneEngine** as a giant wordmark (the page's `h1`), the three-line promise ending in *zero bloat* in Caveat, one paragraph, "Download OneEngine Store" (primary) + "See our games" (outline), then the laptop playing the gameplay capture with the fire overlay and the pause button.
+3. **Marquee.** Railbound, shootPower and the OneEngine Store, then the engine's systems plus LuaJIT and Direct3D 12, separated by orange rings.
+4. **Games** (`#features`, dark). Two-line heading (game name in white, "Built with OneEngine." in grey), a white "Open the store" pill, the Railbound key art (`railbound-keyart.webp`, 21:9, "Featured title" caption over a scrim), then the gameplay video and info card as dark glass.
+5. **Services** (`#services`). Two white cards with orange icon tiles.
+6. **Engine** (`#systems`, dark). Heading, paragraph and a "Learn more" pill; a bento grid of the six systems (orange icon tiles), a terminal card running the `oneengine build --server` example from the FAQ, a live commits card, then the Linux/macOS card, the philosophy quote card and the license note.
+7. **Get OneEngine Store** (`#download`). The orange banner for the Store launcher: what it does today, the live release line, a "Download OneEngine Store" button and a code-drawn illustration of stacked windows.
 8. **FAQ** (`#faq`). Heading on the left, rounded accordion rows on the right.
-9. **Closing call to action.** "Built for developers who actually ship." with the primary Download button.
+9. **Closing call to action.** "Built for developers who actually ship." with "Download OneEngine Store" and "View on GitHub".
 10. **Footer.** Brand, GitHub icon, Product / Project / Help & contact columns, copyright row, then the name set across the full container width (`.foot-word`, decorative, `aria-hidden`).
 11. **Floating button.** Orange circle bottom-right that opens GitHub Issues.
 
@@ -128,10 +128,10 @@ All from Google Fonts with `display=swap`. Headings use `text-wrap: balance`, bo
 
 ## 8. Store (`store/`)
 
-The store is a built single-page app (Vite output with Tailwind classes) without its source in this repo. It still uses the previous violet accent (`#7c5cfa`) on a dark shell and was not restyled. A fixed "Sample data" note sits next to its "OneEngine Site" back pill.
+The store is a built single-page app (Vite output with Tailwind classes) without its source in this repo. Its accent was switched from the old violet (`#7c5cfa`) to `#da3d00` by replacing the colour in the compiled CSS, JS and `store/index.html`. That orange keeps white text at 4.5:1 and reads at 4.4:1 on the store's dark shell; nothing else in the store was restyled. A fixed "Sample data" note sits next to its "OneEngine Site" back pill.
 
 ## 9. Known gaps
 
-- The store does not match the new orange accent.
-- Only one game (Railbound) has media, so the brief's scrolling projects row is a single showcase instead.
+- The store's layout and type were not restyled, only its accent; it still ships sample prices, ratings and reviews (labelled).
+- Only one game (Railbound) has media. shootPower appears in the marquee and Services but has no showcase until it has key art or a capture.
 - Contrast was checked by calculation for the token pairs above, not with an automated audit of every element.
