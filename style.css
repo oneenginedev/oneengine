@@ -1409,6 +1409,65 @@ section {
 
 /* ---------------------------------------------------------------- games showcase */
 
+/* Featured key art: a wide crop of the game's world, with a caption over a dark scrim */
+.game-hero {
+  position: relative;
+  margin: 0 0 20px;
+  overflow: hidden;
+  aspect-ratio: 21 / 9;
+  border: 1px solid var(--dark-line);
+  border-radius: var(--r-lg);
+  background: #000;
+}
+
+.game-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 40%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .game-hero img {
+    transition: transform 900ms var(--ease);
+  }
+  .game-hero:hover img {
+    transform: scale(1.03);
+  }
+}
+
+.game-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0) 45%);
+  pointer-events: none;
+}
+
+.game-hero-cap {
+  position: absolute;
+  left: clamp(18px, 3vw, 32px);
+  bottom: clamp(16px, 2.6vw, 28px);
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 500;
+}
+
+.game-hero-tag {
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--accent-fill);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
 /* On the dark games band the cards turn to dark glass */
 .games .game-video-card,
 .games .game-info-card {
@@ -2218,6 +2277,9 @@ html.js-reveal [data-reveal]:focus-within {
   }
   .banner {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .game-hero {
+    aspect-ratio: 16 / 10;
   }
   .banner-art {
     width: min(100%, 300px);
