@@ -1409,6 +1409,28 @@ section {
 
 /* ---------------------------------------------------------------- games showcase */
 
+/* On the dark games band the cards turn to dark glass */
+.games .game-video-card,
+.games .game-info-card {
+  border-color: var(--dark-line);
+  background: var(--dark-card);
+  box-shadow: none;
+}
+
+.games .game-video-caption,
+.games .game-info-card p {
+  color: var(--on-dark-2);
+}
+
+.games .game-tag {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.games .head-aside p {
+  color: var(--on-dark-2);
+}
+
 .game-showcase {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
