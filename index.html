@@ -33,6 +33,38 @@
     />
     <link rel="stylesheet" href="style.css" />
     <link rel="preload" as="image" href="gameplay-frame.webp" type="image/webp" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://oneenginedev.github.io/oneengine/#org",
+            "name": "OneEngine",
+            "url": "https://oneenginedev.github.io/oneengine/",
+            "logo": "https://oneenginedev.github.io/oneengine/favicon.svg",
+            "sameAs": ["https://github.com/oneenginedev/oneengine"]
+          },
+          {
+            "@type": "VideoGame",
+            "name": "Railbound: Tactical Protocol",
+            "description": "Lead an automated rail defense vanguard across hostile industrial zones.",
+            "genre": ["Tactical", "Automation", "Defense", "Strategy", "Sci-fi"],
+            "gamePlatform": "Windows",
+            "image": "https://oneenginedev.github.io/oneengine/railbound-keyart.webp",
+            "publisher": { "@id": "https://oneenginedev.github.io/oneengine/#org" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "OneEngine Store",
+            "applicationCategory": "GameApplication",
+            "operatingSystem": "Windows 10, Windows 11",
+            "downloadUrl": "https://oneenginedev.github.io/oneengine/download.html",
+            "publisher": { "@id": "https://oneenginedev.github.io/oneengine/#org" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
