@@ -1401,6 +1401,33 @@ section {
   font-weight: 600;
 }
 
+/* The engine's own cards close the dark engine band */
+.engine-cards {
+  margin-top: 16px;
+}
+
+.dark .plain-card {
+  border-color: var(--dark-line);
+  background: var(--dark-card);
+}
+
+.dark .plain-card h3 {
+  color: #fff;
+}
+
+.dark .plain-card p,
+.dark .note {
+  color: var(--on-dark-2);
+}
+
+.dark .plain-card .text-link {
+  color: #ff8a5c;
+}
+
+.dark .quote-card {
+  background: #1a1a1a;
+}
+
 .note {
   margin-top: 20px;
   color: var(--muted);
